@@ -18,36 +18,39 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoSaver {
-	
+
 	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html) {
-		String userName = "";
-		String password = "";
 		String database = "";
-		
-		MongoCredential credential = MongoCredential.createCredential(userName, database, password.toCharArray());
-		
+
 		boolean success = true;
-		
-		try (MongoClient mongoClient = new MongoClient(new ServerAddress("ds227939.mlab.com", 27939), credential, MongoClientOptions.builder().build()) ) {
-			
+
+		try {
+
+			MongoClientURI uri = new MongoClientURI(
+
+					"your mongodb connection link");
+
+
+			MongoClient mongoClient = new MongoClient(uri);
+
 			MongoDatabase db = mongoClient.getDatabase( database );
-			
-			MongoCollection<Document> c = db.getCollection("");
-			
-			Document  doc = new Document ("to", to)
-			        .append("", from)
-			        .append("", subject)
-			        .append("", text)
-			        .append("", html);
-			c.insertOne(doc);
+
+//			MongoCollection<Document> c = db.getCollection("email");
+//
+//			Document  doc = new Document ("to", to)
+//					.append("from", from)
+//					.append("subject", subject)
+//					.append("text", text)
+//					.append("asHtml", html);
+//			c.insertOne(doc);
 		} catch (MongoException mongoException) {
 			System.out.println("XXXXXXXXXXXXXXXXXX ERROR WHILE SAVING TO MONGO XXXXXXXXXXXXXXXXXXXXXXXXXX");
 			mongoException.printStackTrace();
 			success = false;
 		}
-		
+
 		return success;
- 		
+
 	}
 
 }
