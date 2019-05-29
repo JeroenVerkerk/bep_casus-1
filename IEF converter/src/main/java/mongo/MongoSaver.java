@@ -1,4 +1,4 @@
-package main.java.mongo;
+package mongo;
 
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -35,14 +35,6 @@ public class MongoSaver {
 
 			MongoDatabase db = mongoClient.getDatabase( database );
 
-//			MongoCollection<Document> c = db.getCollection("email");
-//
-//			Document  doc = new Document ("to", to)
-//					.append("from", from)
-//					.append("subject", subject)
-//					.append("text", text)
-//					.append("asHtml", html);
-//			c.insertOne(doc);
 		} catch (MongoException mongoException) {
 			System.out.println("XXXXXXXXXXXXXXXXXX ERROR WHILE SAVING TO MONGO XXXXXXXXXXXXXXXXXXXXXXXXXX");
 			mongoException.printStackTrace();
