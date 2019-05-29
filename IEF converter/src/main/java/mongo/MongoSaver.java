@@ -19,8 +19,8 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoSaver {
 
-	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html) {
-		String database = "";
+	public static boolean save() {
+		String database = "BEPCasus";
 
 		boolean success = true;
 
@@ -28,7 +28,7 @@ public class MongoSaver {
 
 			MongoClientURI uri = new MongoClientURI(
 
-					"your mongodb connection link");
+					"mongodb+srv://admin:admin@bepcasus-u1lfa.mongodb.net/test?retryWrites=true");
 
 
 			MongoClient mongoClient = new MongoClient(uri);
