@@ -1,4 +1,4 @@
-package mongo;
+package main.java.mongo;
 
 import java.net.UnknownHostException;
 import java.util.Arrays;
