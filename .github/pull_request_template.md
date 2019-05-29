@@ -4,3 +4,6 @@
 [ ] gaat je code over één bepaald onderdeel?  
 [ ] heb je gebruik gemaakt van de fix/... of feature/... benaming? 
 [ ] heb je de laatste versie van master gepulled? 
+
+
+[ ] is niet gecheckt [x] is wel gecheckt 
