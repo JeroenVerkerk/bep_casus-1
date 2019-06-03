@@ -27,7 +27,6 @@ public class DBConnector {
         try {
            conn  = DriverManager.getConnection(url, props);
         }catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE CONNECTING TO DATABASe XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
