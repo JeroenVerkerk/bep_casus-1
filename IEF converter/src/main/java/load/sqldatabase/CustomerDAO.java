@@ -15,7 +15,7 @@ public class CustomerDAO {
     private Connection connection;
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
-    public Customer selectKlantinformatie(int customerId) {
+    public Customer selectCustomerInformation(int customerId) {
         connection = connector.getConnection();
         Customer customer = null;
         Name name;
