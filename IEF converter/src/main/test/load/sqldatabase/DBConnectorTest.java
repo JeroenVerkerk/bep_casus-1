@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DBConnectionTest {
+public class DBConnectorTest {
     private DBConnector dbConnector;
 
     @BeforeEach
