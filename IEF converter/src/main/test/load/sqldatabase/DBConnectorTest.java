@@ -11,10 +11,7 @@ import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DBConnectorTest {
-    private DBConnector dbConnector;
-
-    @BeforeEach
-    public void beforeEach() {dbConnector = new DBConnector();}
+    private DBConnector dbConnector = DBConnector.getInstance();
 
     @Test
     public void testConnection() throws SQLException {

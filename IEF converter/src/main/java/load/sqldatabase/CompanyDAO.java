@@ -11,13 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyDAO {
-    private DBConnector dbConnector;
+    private DBConnector dbConnector = DBConnector.getInstance();
     private Connection connection;
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
-
-    public CompanyDAO() {
-        dbConnector = new DBConnector();
-    }
 
     public Company selectCompanyInfomation(int customerId) {
         connection = dbConnector.getConnection();

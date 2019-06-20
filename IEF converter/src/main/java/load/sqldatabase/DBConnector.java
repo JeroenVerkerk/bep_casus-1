@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 public class DBConnector {
     private Connection conn;
     private static final Logger logger = LoggerFactory.getLogger(DBConnector.class);
+    private static DBConnector single_instance;
 
-    public DBConnector() {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch(ClassNotFoundException ex) {
-            logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE TRYING TO FIND CLASS XXXXXXXXXXXXXXXXXXXXXXXXXX");
-            logger.info(ex.getMessage(), ex);
+    public static DBConnector getInstance() {
+        if (single_instance == null)
+        {
+            single_instance = new DBConnector();
         }
+        return single_instance;
     }
 
     public Connection getConnection() {

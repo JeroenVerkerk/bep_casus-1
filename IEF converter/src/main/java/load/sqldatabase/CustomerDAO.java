@@ -11,13 +11,9 @@ import enums.Enums.*;
 
 
 public class CustomerDAO {
-    private DBConnector connector;
+    private DBConnector connector = DBConnector.getInstance();
     private Connection connection;
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
-
-    public CustomerDAO() {
-        connector = new DBConnector();
-    }
 
     public Customer selectKlantinformatie(int customerId) {
         connection = connector.getConnection();
