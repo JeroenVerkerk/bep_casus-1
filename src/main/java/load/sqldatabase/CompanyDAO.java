@@ -13,11 +13,12 @@ import java.util.List;
 public class CompanyDAO {
     private DBConnector dbConnector = DBConnector.getInstance();
     private Connection connection;
+    //private Company company;
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 
-    public Company selectCompanyInfomation(int customerId) {
+    public List<Company> selectCompanyInfomation(int customerId) {
         connection = dbConnector.getConnection();
-        Company company = null;
+        List<Company> companies = new ArrayList<>();
 
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = 'F'");
@@ -25,24 +26,28 @@ public class CompanyDAO {
             stmt.setInt(2, customerId);
             ResultSet rs = stmt.executeQuery();
 
-            String street = rs .getString("straat");
-            String houseNumber = rs.getString("huisnummer");
-            String postalcode = rs.getString("postcode");
-            String city = rs.getString("plaats");
-            String companyName = rs.getString("bedrijfsnaam");
-            String btwNumber = rs.getString("vat");
-            String IBAN;
-            if (rs.getString("bankrek") != null) {
-                IBAN = rs.getString("bankrek");
-            }
-            else {
-                IBAN = rs.getString("giro");
-            }
-            String BIC = rs.getString("bik");
+            while (rs.next()) {
+                String street = rs .getString("straat");
+                String houseNumber = rs.getString("huisnummer");
+                String postalcode = rs.getString("postcode");
+                String city = rs.getString("plaats");
+                String companyName = rs.getString("bedrijfsnaam");
+                String btwNumber = rs.getString("vat");
+                String IBAN;
+                if (rs.getString("bankrek") != null) {
+                    IBAN = rs.getString("bankrek");
+                }
+                else {
+                    IBAN = rs.getString("giro");
+                }
+                String BIC = rs.getString("bik");
 
-            Adress adress = new Adress(street, postalcode, city, houseNumber);
-            Bank bank = new Bank(IBAN, BIC);
-            company = new Company(companyName, btwNumber, adress, bank);
+                Adress adress = new Adress(street, postalcode, city, houseNumber);
+                Bank bank = new Bank(IBAN, BIC);
+                Company company = new Company(companyName, btwNumber, adress, bank);
+                companies.add(company);
+            }
+
 
             rs.close();
             connection.close();
@@ -51,6 +56,6 @@ public class CompanyDAO {
             logger.info(ex.getMessage(), ex);
         }
 
-        return company;
+        return companies;
     }
 }

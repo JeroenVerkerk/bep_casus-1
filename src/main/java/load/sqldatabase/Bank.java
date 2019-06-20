@@ -20,4 +20,12 @@ public class Bank {
     public String getBIC() {
         return BIC;
     }
+
+    public void setIBAN(String IBAN) {
+        this.IBAN = IBAN;
+    }
+
+    public void setBIC(String BIC) {
+        this.BIC = BIC;
+    }
 }

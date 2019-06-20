@@ -1,7 +1,7 @@
 package load.sqldatabase;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

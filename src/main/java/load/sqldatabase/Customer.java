@@ -34,4 +34,20 @@ public class Customer {
     public Company getCompany() {
         return company;
     }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }
