@@ -19,7 +19,7 @@ public class Invoice {
     }
 
     public double getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(double id) {
@@ -27,7 +27,7 @@ public class Invoice {
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     public void setDate(Date date) {
@@ -35,7 +35,7 @@ public class Invoice {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -43,7 +43,7 @@ public class Invoice {
     }
 
     public ArrayList<InvoiceLine> getInvoiceLines() {
-        return invoiceLines;
+        return this.invoiceLines;
     }
 
     public void setInvoiceLines(ArrayList<InvoiceLine> invoiceLines) {
@@ -51,7 +51,7 @@ public class Invoice {
     }
 
     public double getCustomerId() {
-        return customerId;
+        return this.customerId;
     }
 
     public void setCustomerId(double customerId) {

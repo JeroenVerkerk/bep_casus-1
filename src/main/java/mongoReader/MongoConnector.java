@@ -16,13 +16,11 @@ public final class MongoConnector {
 	private final MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb+srv://admin:admin@bepcasus-u1lfa.mongodb.net/test?retryWrites=true&w=majority"));
 
 	public static MongoConnector getInstance() {
-		if (single_instance == null)
-		{
+		if (single_instance == null) {
 			single_instance = new MongoConnector();
 		}
 		return single_instance;
 	}
-
 
 	public MongoCollection<Document> getCollection () {
 		String database = "bifi";
@@ -41,7 +39,5 @@ public final class MongoConnector {
 		}
 
 		return collection;
-
 	}
-
 }
