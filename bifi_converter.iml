@@ -26,6 +26,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.8.0-beta4" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.4.2" level="project" />
-    <orderEntry type="library" name="Maven: project.bep:bifi_converter:1" level="project" />
+    <orderEntry type="library" name="Maven: bep.project:bifi_oldadress:1" level="project" />
   </component>
 </module>
