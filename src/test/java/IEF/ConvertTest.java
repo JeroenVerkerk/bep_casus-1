@@ -38,7 +38,7 @@ class ConvertTest {
 
     @Test
     void testSplitProductDescription() {
-        assertEquals("T", convert.getInvoiceLines());
+        assertEquals("T", convert.splitProductDescription());
     }
 
     @Test
