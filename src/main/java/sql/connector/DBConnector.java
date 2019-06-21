@@ -1,4 +1,4 @@
-package load.sqldatabase;
+package sql.connector;
 
 import java.sql.*;
 import java.util.Properties;

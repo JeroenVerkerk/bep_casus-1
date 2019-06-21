@@ -1,5 +1,8 @@
-package load.sqldatabase;
+package sql.dao;
 
+import sql.models.Customer;
+import sql.connector.DBConnector;
+import sql.models.Name;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,37 +15,46 @@ import java.util.List;
 
 import enums.Enums.*;
 
+import sql.models.Adress;
+import sql.models.Bank;
+import sql.models.Company;
+
 
 public class CustomerDAO {
     private DBConnector connector = DBConnector.getInstance();
     private Connection connection;
+    private AdressMaker adressMaker;
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
-    public List<Customer> selectCustomerInformation(int customerId) {
+    public List<Customer> selectCustomerInformation(int customerId, String adressType) {
         connection = connector.getConnection();
         List<Customer> customers = new ArrayList<>();
         Salutation salutation;
         String IBAN;
 
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = 'F'");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?");
             stmt.setInt(1, customerId);
             stmt.setInt(2, customerId);
             stmt.setInt(3, customerId);
+            stmt.setString(4, adressType);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
+                adressMaker = new AdressMaker(rs.getString("straat"), rs.getString("plaats"), rs.getString("huisnummer"), rs.getString("postcode"));
+
                 String firstName = rs.getString("voornaam");
                 String lastName = rs.getString("achternaam");
                 String middleName = rs.getString("tussenvoegsel");
-                String street = rs.getString("straat");
-                String houseNumber = rs.getString("huisnummer");
-                String postalcode = rs.getString("postcode");
-                String city = rs.getString("plaats");
+                String street = adressMaker.getStreet();
+                String houseNumber = adressMaker.getHouseNumber();
+                String postalcode = adressMaker.getPostalcode();
+                String city = adressMaker.getCity();
+
                 String bic = rs.getString("bic");
 
 
-                if (rs.getString("geslacht") == "m") {
+                if (rs.getString("geslacht").equals("m")) {
                     salutation = Salutation.DHR;
                 }
                 else {

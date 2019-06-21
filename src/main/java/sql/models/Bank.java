@@ -1,12 +1,8 @@
-package load.sqldatabase;
+package sql.models;
 
 public class Bank {
     private String IBAN;
     private String BIC;
-
-    public Bank() {
-
-    }
 
     public Bank(String IBAN, String BIC) {
         this.IBAN = IBAN;
@@ -19,13 +15,5 @@ public class Bank {
 
     public String getBIC() {
         return BIC;
-    }
-
-    public void setIBAN(String IBAN) {
-        this.IBAN = IBAN;
-    }
-
-    public void setBIC(String BIC) {
-        this.BIC = BIC;
     }
 }

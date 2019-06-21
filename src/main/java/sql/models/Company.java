@@ -1,4 +1,7 @@
-package load.sqldatabase;
+package sql.models;
+
+import sql.models.Adress;
+import sql.models.Bank;
 
 public class Company {
     private String companyName;
@@ -27,21 +30,5 @@ public class Company {
 
     public Bank getBank() {
         return bank;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public void setBtwNumber(String btwNumber) {
-        this.btwNumber = btwNumber;
-    }
-
-    public void setAdress(Adress adress) {
-        this.adress = adress;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
     }
 }
