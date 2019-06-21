@@ -1,5 +1,6 @@
 package Invoices;
 
+import com.mongodb.client.model.Filters;
 import mongoReader.MongoConnector;
 import org.bson.Document;
 
@@ -13,8 +14,7 @@ public class InvoiceDAO {
     private static InvoiceDAO single_instance;
 
     public static InvoiceDAO getInstance() {
-        if (single_instance == null)
-        {
+        if (single_instance == null) {
             single_instance = new InvoiceDAO();
         }
         return single_instance;
@@ -24,32 +24,42 @@ public class InvoiceDAO {
         Iterator<Document> iterator = connection.getCollection().find().iterator();
         ArrayList<Invoice> invoices = new ArrayList<>();
 
-        while(iterator.hasNext())
-        {
-            Document document = iterator.next();
-
-            double id = document.getDouble("invoiceId");
-            Date date = document.getDate("date");
-            String description = document.getString("note");
-            double customerId = document.getDouble("customerId");
-
-            ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
-            List<Document> lines = (List<Document>) document.get("invoiceLines");
-            for (Document line : lines) {
-
-                String productName = line.getString("productName");
-                double amount = line.getDouble("quantity");
-                double totalPrice = line.getDouble("totalPrice");
-                String unit = line.getString("unit");
-                String btw = line.getString("btwCode");
-
-                InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, btw);
-                invoiceLines.add(invoiceLine);
-            }
-
-            Invoice invoice = new Invoice(id, date, description, customerId, invoiceLines);
-            invoices.add(invoice);
+        while (iterator.hasNext()) {
+            Invoice newInvoice = this.fillInvoice(iterator.next());
+            invoices.add(newInvoice);
         }
         return invoices;
+    }
+
+    public Invoice getInvoiceById(double invoiceId) {
+        Iterator<Document> iterator = connection.getCollection().find(Filters.and(Filters.eq("invoiceId", invoiceId))).limit(1).iterator();
+        Invoice newInvoice = this.fillInvoice(iterator.next());
+        return newInvoice;
+    }
+
+
+    private Invoice fillInvoice(Document document) {
+
+        double id = document.getDouble("invoiceId");
+        Date date = document.getDate("date");
+        String description = document.getString("note");
+        double customerId = document.getDouble("customerId");
+
+        ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
+        List<Document> lines = (List<Document>) document.get("invoiceLines");
+        for (Document line : lines) {
+
+            String productName = line.getString("productName");
+            double amount = line.getDouble("quantity");
+            double totalPrice = line.getDouble("totalPrice");
+            String unit = line.getString("unit");
+            String btw = line.getString("btwCode");
+
+            InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, btw);
+            invoiceLines.add(invoiceLine);
+        }
+
+        Invoice invoice = new Invoice(id, date, description, customerId, invoiceLines);
+        return invoice;
     }
 }

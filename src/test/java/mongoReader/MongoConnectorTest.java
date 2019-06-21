@@ -5,6 +5,7 @@ import Invoices.InvoiceDAO;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -32,5 +33,24 @@ class MongoConnectorTest {
     void testInvoiceAreFilled() {
         ArrayList<Invoice> invoices = invoiceDAO.getInvoices();
         assertTrue(collection.count() == invoices.size());
+    }
+
+    @Test
+    void testInvoiceById() {
+        double invoiceId = 1;
+        Invoice invoice = invoiceDAO.getInvoiceById(invoiceId);
+        assertTrue(invoice.getInvoiceId() == invoiceId);
+
+    }
+
+    @Disabled
+    @Test
+    void testGetInvoiceInfo() {
+        ArrayList<Invoice> invoices = invoiceDAO.getInvoices();
+        for (Invoice invoice : invoices) {
+            System.out.println(invoice.toString());
+        }
+        assertTrue(0 == 0);
+
     }
 }
