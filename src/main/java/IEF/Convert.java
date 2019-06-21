@@ -36,6 +36,7 @@ public class Convert {
     public String getInvoiceInfo(int maandNummer) {
         StringBuilder invoiceStringBuilder = new StringBuilder();
         ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
+        invoiceStringBuilder.append("F");
         for (Invoice invoice : invoices) {
             invoiceStringBuilder.append("F");
 
