@@ -16,7 +16,7 @@ public class InvoiceLine {
     }
 
     public String getProductName() {
-        return productName;
+        return this.productName;
     }
 
     public void setProductName(String productName) {
@@ -24,7 +24,7 @@ public class InvoiceLine {
     }
 
     public double getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(double amount) {
@@ -32,7 +32,7 @@ public class InvoiceLine {
     }
 
     public double getTotalPrice() {
-        return totalPrice;
+        return this.totalPrice;
     }
 
     public void setTotalPrice(double totalPrice) {
@@ -40,7 +40,7 @@ public class InvoiceLine {
     }
 
     public String getUnit() {
-        return unit;
+        return this.unit;
     }
 
     public void setUnit(String unit) {
@@ -48,7 +48,7 @@ public class InvoiceLine {
     }
 
     public String getBtw() {
-        return btw;
+        return this.btw;
     }
 
     public void setBtw(String btw) {
