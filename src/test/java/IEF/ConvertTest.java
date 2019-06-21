@@ -17,24 +17,29 @@ class ConvertTest {
 
     @Test
     void getCompanyInfo() {
-        assertNull(convert.getCompanyInfo());
+        assertEquals("B", convert.getCompanyInfo());
     }
 
     @Test
     void getCustomerInfo() {
-        assertNull(convert.getCustomerInfo());
+        assertEquals("K", convert.getCustomerInfo());
     }
 
     @Test
     void getInvoiceInfo() {
-        assertNull(convert.getInvoiceInfo());
+        assertEquals("F", convert.getInvoiceInfo());
     }
 
     @Test
     void getInvoiceLines() {
-        assertNull(convert.getInvoiceLines());
+        assertEquals("R", convert.getInvoiceLines());
     }
 
+
+    @Test
+    void testSplitProductDescription() {
+        assertEquals("T", convert.getInvoiceLines());
+    }
 
     @Test
     void testNegativeLengthConversion() {
@@ -92,6 +97,5 @@ class ConvertTest {
         convert = null;
         assertNull(convert);
     }
-
 
 }
