@@ -53,4 +53,13 @@ class MongoConnectorTest {
         assertTrue(0 == 0);
 
     }
+
+    @Test
+    void testInvoiceByMonth() {
+        int month = 5;
+        ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(month);
+        for (Invoice invoice : invoices) {
+            assertTrue(invoice.getDate().getMonth() == month);
+        }
+    }
 }

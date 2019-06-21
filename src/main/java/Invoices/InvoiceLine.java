@@ -59,7 +59,7 @@ public class InvoiceLine {
         return "\nProductnaam: " + getProductName() +
                 "\nAantal: " + getAmount() +
                 "\nPrijs: " + getTotalPrice() +
-                "\nEenheid: " + getUnit() + 
+                "\nEenheid: " + getUnit() +
                 "\nBTW: " + getBtw() + "\n";
     }
 }
