@@ -44,8 +44,4 @@ public final class MongoConnector {
 
 	}
 
-	public void closeConnection() {
-		mongoClient.close();
-	}
-
 }
