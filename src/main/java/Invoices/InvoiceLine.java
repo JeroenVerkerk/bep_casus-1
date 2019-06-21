@@ -54,4 +54,12 @@ public class InvoiceLine {
     public void setBtw(String btw) {
         this.btw = btw;
     }
+
+    public String toString() {
+        return "\nProductnaam: " + getProductName() +
+                "\nAantal: " + getAmount() +
+                "\nPrijs: " + getTotalPrice() +
+                "\nEenheid: " + getUnit() + 
+                "\nBTW: " + getBtw() + "\n";
+    }
 }
