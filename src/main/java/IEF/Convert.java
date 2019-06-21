@@ -3,19 +3,40 @@ package IEF;
 public class Convert {
 
     public String getCompanyInfo() {
-        return null;
+        StringBuilder companyStringBuilder = new StringBuilder();
+        companyStringBuilder.append("B");
+
+        return companyStringBuilder.toString();
     }
 
     public String getCustomerInfo() {
-        return null;
+        StringBuilder customerStringBuilder = new StringBuilder();
+        customerStringBuilder.append("K");
+        return customerStringBuilder.toString();
     }
 
     public String getInvoiceInfo() {
-        return null;
+        StringBuilder invoiceStringBuilder = new StringBuilder();
+        invoiceStringBuilder.append("F");
+        return invoiceStringBuilder.toString();
     }
 
     public String getInvoiceLines() {
-        return null;
+        StringBuilder lineStringBuilder = new StringBuilder();
+        lineStringBuilder.append("R");
+        return lineStringBuilder.toString();
+    }
+
+    public String splitProductDescription(){
+        StringBuilder descStringBuilder = new StringBuilder();
+        descStringBuilder.append("T");
+        return descStringBuilder.toString();
+    }
+
+    public double doubleConverter(int prefixLength, int decimals, double getal){
+        //todo: implementation
+
+        return getal;
     }
 
     public char negativeNumberConverter(int number) {
@@ -60,8 +81,12 @@ public class Convert {
 
     public String paddOrSnip(int maxLength, String content){
         int actualLength = content.length();
-        if (actualLength > maxLength){
-            content = content.substring(0,maxLength);
+        if (actualLength >= maxLength){
+            try {
+                content = content.substring(0,maxLength);
+            } catch (StringIndexOutOfBoundsException e){
+                return content;
+            }
         }
         if (actualLength < maxLength){
             content = content + " ".repeat(Math.max(0, maxLength - actualLength));

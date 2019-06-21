@@ -17,20 +17,36 @@ class ConvertTest {
 
     @Test
     void getCompanyInfo() {
+        assertNull(convert.getCompanyInfo());
     }
 
     @Test
     void getCustomerInfo() {
+        assertNull(convert.getCustomerInfo());
     }
 
     @Test
     void getInvoiceInfo() {
+        assertNull(convert.getInvoiceInfo());
     }
 
     @Test
     void getInvoiceLines() {
+        assertNull(convert.getInvoiceLines());
     }
 
+
+    @Test
+    void testNegativeLengthConversion() {
+        String negString = convert.paddOrSnip(-2, "String");
+        assertEquals("String", negString);
+    }
+
+    @Test
+    void testNoSnipNoPadd() {
+        String correctString = convert.paddOrSnip(4, "vier");
+        assertEquals("vier", correctString);
+    }
 
     @Test
     void testPadd() {
@@ -39,7 +55,7 @@ class ConvertTest {
     }
 
     @Test
-    void testSnip(){
+    void testSnip() {
         String snipString = convert.paddOrSnip(2, "vier");
         assertEquals("vi", snipString);
 
@@ -57,6 +73,7 @@ class ConvertTest {
         char seven = convert.negativeNumberConverter(7);
         char eight = convert.negativeNumberConverter(8);
         char nine = convert.negativeNumberConverter(9);
+        char def = convert.negativeNumberConverter('a');
         assertEquals(' ', zero);
         assertEquals('!', one);
         assertEquals('"', two);
@@ -67,6 +84,7 @@ class ConvertTest {
         assertEquals('\\', seven);
         assertEquals('(', eight);
         assertEquals(')', nine);
+        assertEquals('a', def);
     }
 
     @AfterEach
