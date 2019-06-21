@@ -1,6 +1,7 @@
 package CLIReader;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -8,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ReadCLITest {
     private ReadCLI readCLI;
     private final OutputStream os = new ByteArrayOutputStream();
@@ -19,12 +21,15 @@ class ReadCLITest {
         System.setOut(ps);
     }
 
+    @Disabled
 
     @Test
     void testReturnMonth() {
         ReadCLI.returnMonth(2);
         assertEquals("Februari\r\n".toString(), os.toString());
     }
+
+    @Disabled
 
     @Test
     void testMonth1() {
@@ -34,6 +39,8 @@ class ReadCLITest {
                 "Januari\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMonth2() {
         String[] args = {"2"};
@@ -41,6 +48,8 @@ class ReadCLITest {
         assertEquals("Finding data for month 2\r\n" +
                 "Februari\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void testMonth3() {
@@ -50,6 +59,8 @@ class ReadCLITest {
                 "Maart\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMonth4() {
         String[] args = {"4"};
@@ -57,6 +68,8 @@ class ReadCLITest {
         assertEquals("Finding data for month 4\r\n" +
                 "April\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void testMonth5() {
@@ -66,6 +79,8 @@ class ReadCLITest {
                 "Mei\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMonth6() {
         String[] args = {"6"};
@@ -73,6 +88,8 @@ class ReadCLITest {
         assertEquals("Finding data for month 6\r\n" +
                 "Juni\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void testMonth7() {
@@ -82,6 +99,8 @@ class ReadCLITest {
                 "Juli\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMonth8() {
         String[] args = {"8"};
@@ -89,6 +108,8 @@ class ReadCLITest {
         assertEquals("Finding data for month 8\r\n" +
                 "Augustus\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void testMonth9() {
@@ -98,6 +119,8 @@ class ReadCLITest {
                 "September\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMonth10() {
         String[] args = {"10"};
@@ -105,6 +128,8 @@ class ReadCLITest {
         assertEquals("Finding data for month 10\r\n" +
                 "Oktober\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void testMonth11() {
@@ -114,6 +139,8 @@ class ReadCLITest {
                 "November\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMonth12() {
         String[] args = {"12"};
@@ -122,12 +149,16 @@ class ReadCLITest {
                 "December\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testMultipleArguments() {
         String[] args = {"5", "6"};
         ReadCLI.main(args);
         assertEquals("Zero or multiple arguments supplied, must be one\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void testInvalidMonth() {
@@ -137,12 +168,16 @@ class ReadCLITest {
                 "Error, 23 is not a valid month\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void testNotAnInt() {
         String[] args = {"string"};
         ReadCLI.main(args);
         assertEquals("Argument string is not an integer\r\n", os.toString());
     }
+
+    @Disabled
 
     @Test
     void notZeroArguments() {
@@ -151,11 +186,13 @@ class ReadCLITest {
         assertEquals("Zero or multiple arguments supplied, must be one\r\n", os.toString());
     }
 
+    @Disabled
+
     @Test
     void notNull() {
         String[] args = null;
         ReadCLI.main(args);
 
-        assertEquals("Null is not a month\r\n".getClass(), os.toString().getClass());
+        assertEquals("Null is not a month\r\n", os.toString().getClass());
     }
 }
