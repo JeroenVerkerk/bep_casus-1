@@ -37,6 +37,19 @@ public class InvoiceDAO {
         return newInvoice;
     }
 
+    public ArrayList<Invoice> getInvoicesByMonth(int month) {
+        ArrayList<Invoice> invoices = new ArrayList<>();
+        Iterator<Invoice> iterator = this.getInvoices().iterator();
+
+        while (iterator.hasNext()) {
+            Invoice invoice = iterator.next();
+            if (invoice.getDate().getMonth() != month) {
+                invoices.remove(invoice);
+            }
+        }
+        return invoices;
+    }
+
 
     private Invoice fillInvoice(Document document) {
 
