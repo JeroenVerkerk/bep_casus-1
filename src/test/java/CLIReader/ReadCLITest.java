@@ -25,7 +25,7 @@ class ReadCLITest {
     @Test
     void testReturnMonth() {
         ReadCLI.returnMonth(2);
-        assertEquals("Februari\r\n", os.toString());
+        assertEquals("Februari\r\n".toString(), os.toString());
     }
 
     @Test
