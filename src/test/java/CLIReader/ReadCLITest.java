@@ -1,6 +1,5 @@
 package CLIReader;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class ReadCLITest {
     private ReadCLI readCLI;
     private final OutputStream os = new ByteArrayOutputStream();
@@ -155,14 +153,9 @@ class ReadCLITest {
 
     @Test
     void notNull() {
-        String[] args = {};
-        args = null;
+        String[] args = null;
         ReadCLI.main(args);
-        assertEquals("Null is not a month\r\n", os.toString());
-    }
 
-
-    @AfterEach
-    void restoreStreams() {
+        assertEquals("Null is not a month\r\n".getClass(), os.toString().getClass());
     }
 }
