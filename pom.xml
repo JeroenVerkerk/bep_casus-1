@@ -109,10 +109,5 @@
             <version>1.4.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>project.bep</groupId>
-            <artifactId>bifi_converter</artifactId>
-            <version>1</version>
-        </dependency>
     </dependencies>
 </project>
