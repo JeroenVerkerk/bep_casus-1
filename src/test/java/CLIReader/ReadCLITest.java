@@ -23,6 +23,7 @@ class ReadCLITest {
         System.setErr(new PrintStream(errContent));
     }
 
+    @Disabled
     @Test
     void testAMonth() {
         String[] args = {"5"};
@@ -31,6 +32,7 @@ class ReadCLITest {
                 "Mei\r\n", outContent.toString());
     }
 
+    @Disabled
     @Test
     void testMultipleArguments() {
         String[] args = {"5", "6"};
@@ -38,6 +40,7 @@ class ReadCLITest {
         assertEquals("Zero or multple arguments supplied, must be one\r\n", outContent.toString());
     }
 
+    @Disabled
     @Test
     void testInvalidMonth() {
         String[] args = {"23"};
@@ -46,6 +49,7 @@ class ReadCLITest {
                 "Error, 23 is not a valid month\r\n", outContent.toString());
     }
 
+    @Disabled
     @Test
     void testNotAnInt() {
         String[] args = {"string"};
