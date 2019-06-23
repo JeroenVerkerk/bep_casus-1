@@ -1,5 +1,7 @@
 package Invoices;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,6 +30,19 @@ public class Invoice {
 
     public Date getDate() {
         return this.date;
+    }
+
+    public int parsedDate(){
+        SimpleDateFormat format = new SimpleDateFormat("DDMMYY");
+
+        Date date = this.getDate();
+        try {
+            date = format.parse(date.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return Integer.parseInt(date.toString());
     }
 
     public void setDate(Date date) {
