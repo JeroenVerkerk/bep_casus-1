@@ -1,6 +1,5 @@
 package sql.dao;
 
-import sql.connector.DBConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,16 +14,8 @@ import sql.models.Adress;
 import sql.models.Bank;
 import sql.models.Company;
 
-public class CompanyDAO extends  BaseDao{
+public class CompanyDAO extends  BaseDao implements ICompanyDAO{
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
-    private static CompanyDAO singleInstance;
-
-    public static CompanyDAO getInstance() {
-        if (singleInstance == null) {
-            singleInstance = new CompanyDAO();
-        }
-        return singleInstance;
-    }
 
     public Company selectCompanyInfomation(int customerId) {
         List<Company> companies = new ArrayList<>();
