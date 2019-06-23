@@ -1,14 +1,13 @@
 package load.sqldatabase;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import sql.dao.CompanyDAO;
-import sql.dao.ICompanyDAO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CompanyDAOTest {
-    private ICompanyDAO companyDao;
+    private CompanyDAO companyDao;
 
     @BeforeEach
     public void BeforeEach() {

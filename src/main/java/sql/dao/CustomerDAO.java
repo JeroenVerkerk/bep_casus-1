@@ -1,9 +1,9 @@
 package sql.dao;
 
-import sql.models.Customer;
-import sql.models.Name;
+import enums.Enums.Salutation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sql.models.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,23 +12,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import enums.Enums.*;
 
-import sql.models.Adress;
-import sql.models.Bank;
-import sql.models.Company;
-
-
-public class CustomerDAO extends BaseDao implements ICustomerDAO{
+public class CustomerDAO extends BaseDao {
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
-    private static CustomerDAO sinlgeInstance;
+    private static CustomerDAO singleInstance;
 
     public static CustomerDAO getInstance() {
-        if (sinlgeInstance == null)
+        if (singleInstance == null)
         {
-            sinlgeInstance = new CustomerDAO();
+            singleInstance = new CustomerDAO();
         }
-        return sinlgeInstance;
+        return singleInstance;
     }
 
     public Customer selectCustomerInformation(int customerId) {

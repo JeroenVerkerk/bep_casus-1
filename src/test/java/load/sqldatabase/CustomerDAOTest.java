@@ -1,18 +1,17 @@
 package load.sqldatabase;
 
 import enums.Enums;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sql.dao.CustomerDAO;
-import sql.dao.ICustomerDAO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CustomerDAOTest {
-    private ICustomerDAO customerDAO;
+    private CustomerDAO customerDAO;
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
     @BeforeEach
