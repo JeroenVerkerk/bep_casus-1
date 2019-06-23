@@ -1,18 +1,18 @@
-package Invoices;
+package invoices;
 
 public class InvoiceLine {
     private String productName;
     private double amount;
     private double totalPrice;
     private String unit;
-    private String btw;
+    private String VAT;
 
-    public InvoiceLine(String productName, double amount, double totalPrice, String unit, String btw) {
+    public InvoiceLine(String productName, double amount, double totalPrice, String unit, String VAT) {
         this.productName = productName;
         this.amount = amount;
         this.totalPrice = totalPrice;
         this.unit = unit;
-        this.btw = btw;
+        this.VAT = VAT;
     }
 
     public String getProductName() {
@@ -47,12 +47,12 @@ public class InvoiceLine {
         this.unit = unit;
     }
 
-    public String getBtw() {
-        return this.btw;
+    public String getVAT() {
+        return this.VAT;
     }
 
-    public void setBtw(String btw) {
-        this.btw = btw;
+    public void setVAT(String VAT) {
+        this.VAT = VAT;
     }
 
     public String toString() {
@@ -60,6 +60,6 @@ public class InvoiceLine {
                 "\nAantal: " + getAmount() +
                 "\nPrijs: " + getTotalPrice() +
                 "\nEenheid: " + getUnit() +
-                "\nBTW: " + getBtw() + "\n";
+                "\nBTW: " + getVAT() + "\n";
     }
 }

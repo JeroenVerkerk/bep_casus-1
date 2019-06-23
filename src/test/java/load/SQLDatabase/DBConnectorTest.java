@@ -1,4 +1,4 @@
-package load.sqldatabase;
+package load.SQLDatabase;
 
 import org.junit.jupiter.api.Test;
 import sql.connector.DBConnector;

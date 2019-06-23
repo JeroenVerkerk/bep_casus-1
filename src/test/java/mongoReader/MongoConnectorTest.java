@@ -1,7 +1,7 @@
 package mongoReader;
 
-import Invoices.Invoice;
-import Invoices.InvoiceDAO;
+import invoices.Invoice;
+import invoices.DAO.InvoiceDAO;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;

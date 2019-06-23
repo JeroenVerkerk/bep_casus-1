@@ -1,4 +1,4 @@
-package sql.dao;
+package sql.DAO;
 
 import sql.connector.DBConnector;
 import org.slf4j.Logger;

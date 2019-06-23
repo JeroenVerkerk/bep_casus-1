@@ -11,13 +11,11 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReadCLITest {
-    private ReadCLI readCLI;
     private final OutputStream os = new ByteArrayOutputStream();
     private final PrintStream ps = new PrintStream(os);
 
     @BeforeEach
     void setUpStreams() {
-        readCLI = new ReadCLI();
         System.setOut(ps);
     }
 
