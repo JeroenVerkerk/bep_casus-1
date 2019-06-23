@@ -51,7 +51,7 @@ public class CustomerDAOTest {
 
     @Test
     public void TestCustomerWithGiro() {
-        assertEquals("giro882", customerDAO.selectCustomerInformation(5, "F").get(0).getBank().getIBAN());
+        assertEquals("giro882", customerDAO.selectCustomerInformation(5, "F").get(0).getBank().getIban());
     }
 
     @Test

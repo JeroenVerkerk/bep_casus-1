@@ -46,17 +46,17 @@ public class CompanyDAOTest {
 
     @Test
     public void TestCompanyIBAN() {
-        assertEquals("NL91ABNA0417164300", companyDao.selectCompanyInfomation(1, "F").get(0).getBank().getIBAN());
+        assertEquals("NL91ABNA0417164300", companyDao.selectCompanyInfomation(1, "F").get(0).getBank().getIban());
     }
 
     @Test
     public void TestCompanyBIC() {
-        assertEquals("DABAIE2D", companyDao.selectCompanyInfomation(1, "F").get(0).getBank().getBIC());
+        assertEquals("DABAIE2D", companyDao.selectCompanyInfomation(1, "F").get(0).getBank().getBic());
     }
 
     @Test
     public void TestCompanyWithGiro() {
-        assertEquals("giro882", companyDao.selectCompanyInfomation(5, "F").get(0).getBank().getIBAN());
+        assertEquals("giro882", companyDao.selectCompanyInfomation(5, "F").get(0).getBank().getIban());
     }
 
     @Test

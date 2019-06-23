@@ -5,10 +5,10 @@ public class Enums {
         MVR("Mvr"),
         DHR("Dhr");
 
-        public final String salutation;
+        public final String salutationValue;
 
         private Salutation(String salutation) {
-            this.salutation = salutation;
+            this.salutationValue = salutation;
         }
     }
 }
