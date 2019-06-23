@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import sql.connector.DBConnector;
 import sql.models.Adress;
 import sql.models.Bank;
 import sql.models.Company;

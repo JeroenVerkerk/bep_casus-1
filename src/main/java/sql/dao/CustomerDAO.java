@@ -1,6 +1,5 @@
 package sql.dao;
 
-import sql.connector.DBConnector;
 import sql.models.Customer;
 import sql.models.Name;
 import org.slf4j.Logger;
