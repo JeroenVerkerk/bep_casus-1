@@ -2,6 +2,9 @@ package sql.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sql.models.Adress;
+import sql.models.Bank;
+import sql.models.Company;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +13,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import sql.models.Adress;
-import sql.models.Bank;
-import sql.models.Company;
-
-public class CompanyDAO extends  BaseDao implements ICompanyDAO{
+public class CompanyDAO extends  BaseDao {
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+    private static CompanyDAO singleInstance;
+
+    public static CompanyDAO getInstance() {
+        if (singleInstance == null)
+        {
+            singleInstance = new CompanyDAO();
+        }
+        return singleInstance;
+    }
 
     public Company selectCompanyInfomation(int customerId) {
         List<Company> companies = new ArrayList<>();
