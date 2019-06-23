@@ -26,17 +26,13 @@ public class CustomerDAO {
 
     public Customer selectCustomerInformation(int customerId, String adressType) {
         AdressMaker adressMaker;
-        Connection connection = connector.getConnection();
         List<Customer> customers = new ArrayList<>();
         Salutation salutation;
         String iban;
 
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?")){
-            stmt.setInt(1, customerId);
-            stmt.setInt(2, customerId);
-            stmt.setInt(3, customerId);
-            stmt.setString(4, adressType);
-            ResultSet rs = stmt.executeQuery();
+        try (Connection connection = connector.getConnection();
+             PreparedStatement stmt = createPreparedStatement(connection, customerId, adressType);
+             ResultSet rs = stmt.executeQuery()){
 
             while (rs.next()) {
                 adressMaker = new AdressMaker(rs.getString("straat"), rs.getString("plaats"), rs.getString("huisnummer"), rs.getString("postcode"));
@@ -83,14 +79,22 @@ public class CustomerDAO {
                     customers.add(customer);
                 }
             }
-            rs.close();
-            stmt.close();
-            connection.close();
         }catch(SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
 
         return customers.get(0);
+    }
+
+    private PreparedStatement createPreparedStatement(Connection connection, int customerId, String addressType) throws SQLException {
+        String sql = "SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, customerId);
+        stmt.setInt(2, customerId);
+        stmt.setInt(3, customerId);
+        stmt.setString(4, addressType);
+
+        return stmt;
     }
 }
