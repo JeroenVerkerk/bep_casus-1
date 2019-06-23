@@ -13,13 +13,13 @@ import java.util.List;
 
 public class InvoiceDAO {
     private final MongoConnector connection = MongoConnector.getInstance();
-    private static InvoiceDAO single_instance;
+    private static InvoiceDAO singleInstance;
 
     public static InvoiceDAO getInstance() {
-        if (single_instance == null) {
-            single_instance = new InvoiceDAO();
+        if (singleInstance == null) {
+            singleInstance = new InvoiceDAO();
         }
-        return single_instance;
+        return singleInstance;
     }
 
     public ArrayList<Invoice> getInvoices() {
