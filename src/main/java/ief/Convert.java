@@ -3,8 +3,8 @@ package ief;
 import invoices.Invoice;
 import invoices.InvoiceLine;
 import invoices.dao.InvoiceDAO;
-import sql.dao.CompanyDAO;
-import sql.dao.CustomerDAO;
+import sql.dao.ICompanyDAO;
+import sql.dao.ICustomerDAO;
 import sql.models.Company;
 import sql.models.Customer;
 
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class Convert {
     private InvoiceDAO invoiceDAO = InvoiceDAO.getInstance();
-    private CustomerDAO customerDAO = CustomerDAO.getInstance();
-    private CompanyDAO companyDAO = CompanyDAO.getInstance();
+    private ICustomerDAO iCustomerDAO;
+    private ICompanyDAO iCompanyDAO;
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
@@ -38,7 +38,7 @@ public class Convert {
 
     public String getCompanyInfo(int klantID, String addressType) {
         StringBuilder companyStringBuilder = new StringBuilder();
-        Company company = companyDAO.selectCompanyInfomation(klantID, addressType);
+        Company company = iCompanyDAO.selectCompanyInfomation(klantID);
         companyStringBuilder.append("B");
 
         String companyName = paddOrSnip(60, company.getCompanyName());
@@ -56,7 +56,7 @@ public class Convert {
         String companyCity = paddOrSnip(20, company.getAdress().getCity());
         companyStringBuilder.append(companyCity);
 
-        String companyVatNumber = paddOrSnip(13, company.getBtwNumber());
+        String companyVatNumber = paddOrSnip(13, company.getVatNumber());
         companyStringBuilder.append(companyVatNumber);
 
         String companyIban = paddOrSnip(64, company.getBank().getIban());
@@ -71,7 +71,7 @@ public class Convert {
 
     public String getCustomerInfo(int klantID, String addressType) {
         StringBuilder customerStringBuilder = new StringBuilder();
-        Customer customer = customerDAO.selectCustomerInformation(klantID, addressType);
+        Customer customer = iCustomerDAO.selectCustomerInformation(klantID);
         customerStringBuilder.append("K");
 
 
@@ -102,7 +102,7 @@ public class Convert {
         String cityName = paddOrSnip(20, customer.getAdress().getCity());
         customerStringBuilder.append(cityName);
 
-        String vatNumber = paddOrSnip(13, customer.getCompany().getBtwNumber());
+        String vatNumber = paddOrSnip(13, customer.getCompany().getVatNumber());
         customerStringBuilder.append(vatNumber);
 
         String iban = paddOrSnip(64, customer.getBank().getIban());
