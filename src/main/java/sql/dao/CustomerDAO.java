@@ -1,7 +1,6 @@
 package sql.dao;
 
 import sql.models.Customer;
-import sql.connector.DBConnector;
 import sql.models.Name;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,28 +19,38 @@ import sql.models.Bank;
 import sql.models.Company;
 
 
-public class CustomerDAO {
-    private DBConnector connector = DBConnector.getInstance();
+public class CustomerDAO extends BaseDao implements ICustomerDAO{
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
-    private static CustomerDAO singleInstance;
 
-    public static CustomerDAO getInstance() {
-        if (singleInstance == null) {
-            singleInstance = new CustomerDAO();
+    public Customer selectCustomerInformation(int customerId) {
+
+        List<Customer> customers = new ArrayList<>();
+
+        try (Connection connection = super.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = 'F'")) {
+
+            stmt.setInt(1, customerId);
+            stmt.setInt(2, customerId);
+            stmt.setInt(3, customerId);
+
+            customers.add(createInformation(stmt));
+
+
+        } catch(SQLException ex) {
+            logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
+            logger.info(ex.getMessage(), ex);
         }
-        return singleInstance;
+
+        return customers.get(0);
     }
 
-    public Customer selectCustomerInformation(int customerId, String adressType) {
+    private Customer createInformation(PreparedStatement stmt) {
         AdressMaker adressMaker;
-        List<Customer> customers = new ArrayList<>();
         Salutation salutation;
         String iban;
+        Customer customer = null;
 
-        try (Connection connection = connector.getConnection();
-             PreparedStatement stmt = createPreparedStatement(connection, customerId, adressType);
-             ResultSet rs = stmt.executeQuery()){
-
+        try(ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 adressMaker = new AdressMaker(rs.getString("straat"), rs.getString("plaats"), rs.getString("huisnummer"), rs.getString("postcode"));
 
@@ -75,34 +84,21 @@ public class CustomerDAO {
                 Adress adress = new Adress(street, postalcode, city, houseNumber);
                 if (rs.getString("bedrijfsnaam") == null) {
 
-                    Customer customer = new Customer(name, adress, bank);
-                    customers.add(customer);
+                    customer = new Customer(name, adress, bank);
                 }
                 else {
                     String companyName = rs.getString("bedrijfsnaam");
-                    String btwNumber = rs.getString("vat");
+                    String vatNumber = rs.getString("vat");
 
-                    Company company = new Company(companyName, btwNumber, adress, bank);
-                    Customer customer = new Customer(name, adress, bank, company);
-                    customers.add(customer);
+                    Company company = new Company(companyName, vatNumber, adress, bank);
+                    customer = new Customer(name, adress, bank, company);
                 }
             }
-        }catch(SQLException ex) {
+        } catch (SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
 
-        return customers.get(0);
-    }
-
-    private PreparedStatement createPreparedStatement(Connection connection, int customerId, String addressType) throws SQLException {
-        String sql = "SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, customerId);
-        stmt.setInt(2, customerId);
-        stmt.setInt(3, customerId);
-        stmt.setString(4, addressType);
-
-        return stmt;
+        return customer;
     }
 }
