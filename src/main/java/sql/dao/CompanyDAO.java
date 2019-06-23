@@ -23,15 +23,12 @@ public class CompanyDAO {
         AdressMaker adressMaker;
         Connection connection = dbConnector.getConnection();
         List<Company> companies = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
 
-        try {
-            stmt = connection.prepareStatement("SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = ?");
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = ?")){
             stmt.setInt(1, customerId);
             stmt.setInt(2, customerId);
             stmt.setString(3, adressType);
-            rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
 
@@ -57,19 +54,12 @@ public class CompanyDAO {
                 Company company = new Company(companyName, btwNumber, adress, bank);
                 companies.add(company);
             }
+            rs.close();
+            stmt.close();
+            connection.close();
         }catch(SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
-        }
-        finally {
-            try {
-                rs.close();
-                stmt.close();
-                connection.close();
-            } catch (SQLException e) {
-                logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE CLOSING CONNECTION XXXXXXXXXXXXXXXXXXXXXXXXXX");
-                logger.info(e.getMessage(), e);
-            }
         }
 
         return companies;

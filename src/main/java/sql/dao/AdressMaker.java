@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 public class AdressMaker {
-    private LOOKUP_AdDDR lookupOldAddress;
     private static final Logger logger = LoggerFactory.getLogger(AdressMaker.class);
     private String street;
     private String city;
@@ -25,12 +24,12 @@ public class AdressMaker {
 
     public void checkIfOldAddress(String street) {
         if (street.contains("-MOATA") || street.contains("-NIPJK") || street.contains("-KDLRA")) {
-            FindOldAdress(street);
+            findOldAddress(street);
         }
     }
 
 
-    public void FindOldAdress(String oldAdress) {
+    public void findOldAddress(String oldAdress) {
         Map<String, String> lookedUpAdress = null;
         try {
             oldAdress = oldAdress.replace("-", "");
