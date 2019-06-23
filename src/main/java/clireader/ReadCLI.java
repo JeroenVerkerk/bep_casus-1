@@ -1,7 +1,7 @@
-package CLIReader;
+package clireader;
 
 // compile class: javac ReadCLI.java
-// run class: java CLIReader.ReadCLI [argument]
+// run class: java clireader.ReadCLI [argument]
 public class ReadCLI {
 
     public static void main(String[] args) {

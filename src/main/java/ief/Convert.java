@@ -1,6 +1,6 @@
-package IEF;
+package ief;
 
-import invoices.DAO.InvoiceDAO;
+import invoices.dao.InvoiceDAO;
 import invoices.Invoice;
 import invoices.InvoiceLine;
 
