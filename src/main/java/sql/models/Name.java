@@ -1,4 +1,4 @@
-package SQL.models;
+package sql.models;
 
 import enums.Enums.*;
 

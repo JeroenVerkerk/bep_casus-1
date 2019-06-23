@@ -1,4 +1,4 @@
-package SQL.models;
+package sql.models;
 
 public class Adress {
     private String street;

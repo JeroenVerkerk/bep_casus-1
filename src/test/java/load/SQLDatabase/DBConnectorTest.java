@@ -1,7 +1,7 @@
 package load.SQLDatabase;
 
 import org.junit.jupiter.api.Test;
-import SQL.connector.DBConnector;
+import sql.connector.DBConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

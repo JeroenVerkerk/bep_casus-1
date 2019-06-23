@@ -1,4 +1,4 @@
-package SQL.DAO;
+package sql.DAO;
 
 import ADDRLOOKUPER.LOOKUP_AdDDR;
 import org.slf4j.Logger;
