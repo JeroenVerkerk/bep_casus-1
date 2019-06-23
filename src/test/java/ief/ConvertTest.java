@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConvertTest {
@@ -15,15 +18,16 @@ class ConvertTest {
         convert = new Convert();
         assertNotNull(convert);
     }
-    @Disabled
+
     @Test
     void getCompanyInfo() {
-        assertEquals("B", convert.getCompanyInfo(2, "F"));
+        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2, "F"));
     }
+
     @Disabled
     @Test
     void getCustomerInfo() {
-        assertEquals("K", convert.getCustomerInfo(1, "F"));
+        assertEquals("F", convert.getCustomerInfo(1, "F"));
     }
 
     @Disabled
@@ -32,8 +36,10 @@ class ConvertTest {
         assertEquals("F", convert.getInvoiceInfo(4));
     }
 
+    @Disabled
     @Test
     void getInvoiceLines() {
+        //Mock list of invoicelines?
 //        assertEquals("R", convert.getInvoiceLines());
     }
 
@@ -94,18 +100,21 @@ class ConvertTest {
         assertEquals('a', def);
     }
 
-    @AfterEach
-    void tearDown() {
-        convert = null;
-        assertNull(convert);
-    }
-    @Disabled
     @Test
-    void combineInfoToIEF() {
-        assertEquals("F", convert.combineInfoToIEF(4));
+    void testIEFFileCreated() throws IOException {
+        convert.combineInfoToIEF(5);
+        File file = new File("./invoice5.txt");
+        assertTrue(file.exists());
+
     }
 
     @Test
     void getCustomerIDByMonth() {
+    }
+
+    @AfterEach
+    void tearDown() {
+        convert = null;
+        assertNull(convert);
     }
 }

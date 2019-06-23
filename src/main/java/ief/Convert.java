@@ -8,6 +8,9 @@ import sql.dao.CustomerDAO;
 import sql.models.Company;
 import sql.models.Customer;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Convert {
@@ -15,17 +18,12 @@ public class Convert {
     private CustomerDAO customerDAO = new CustomerDAO();
     private CompanyDAO companyDAO = new CompanyDAO();
 
-    public String combineInfoToIEF(int maandNummer) {
-        StringBuilder finalString = new StringBuilder();
-        for (int ID : getCustomerIDByMonth(maandNummer)) {
-            finalString.append(getCompanyInfo(ID, "F"));
-            finalString.append(getCustomerInfo(ID, "F"));
-            finalString.append(getInvoiceInfo(maandNummer));
-        }
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.generateFile(finalString.toString(), "./Invoice" + maandNummer + ".txt");
+    public void combineInfoToIEF(int maandNummer) throws IOException {
+        String finalString = getInvoiceInfo(maandNummer);
+        BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"));
+        writer.write(finalString);
 
-        return finalString.toString();
+        writer.close();
     }
 
     public ArrayList<Integer> getCustomerIDByMonth(int maandNummer) {
@@ -121,6 +119,10 @@ public class Convert {
         StringBuilder invoiceStringBuilder = new StringBuilder();
         ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
         for (Invoice invoice : invoices) {
+            double ID = invoice.getCustomerId();
+            int intID = (int) ID;
+            invoiceStringBuilder.append(getCompanyInfo(intID, "F"));
+            invoiceStringBuilder.append(getCustomerInfo(intID, "F"));
             invoiceStringBuilder.append("F");
 
             int date = invoice.getParsedDate();
@@ -163,11 +165,9 @@ public class Convert {
 
     public String splitProductDescription(String productDescription) {
         if (productDescription.length() > 60) {
-            StringBuilder descStringBuilder = new StringBuilder();
-            descStringBuilder.append("\n");
-            descStringBuilder.append("T");
-            descStringBuilder.append(productDescription);
-            return descStringBuilder.toString();
+            return "\n" +
+                    "T" +
+                    productDescription;
         }
         return productDescription;
     }
@@ -180,7 +180,7 @@ public class Convert {
 
     public String paddOrSnip(int maxLength, String content) {
         if (content == null) {
-            return " ".repeat(Math.max(0, maxLength ));
+            return " ".repeat(Math.max(0, maxLength));
         }
         int actualLength = content.length();
         if (actualLength >= maxLength) {
