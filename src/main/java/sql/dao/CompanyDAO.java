@@ -19,7 +19,7 @@ public class CompanyDAO {
     private DBConnector dbConnector = DBConnector.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 
-    public List<Company> selectCompanyInfomation(int customerId, String adressType) {
+    public Company selectCompanyInfomation(int customerId, String adressType) {
         AdressMaker adressMaker;
         Connection connection = dbConnector.getConnection();
         List<Company> companies = new ArrayList<>();
@@ -62,6 +62,6 @@ public class CompanyDAO {
             logger.info(ex.getMessage(), ex);
         }
 
-        return companies;
+        return companies.get(0);
     }
 }

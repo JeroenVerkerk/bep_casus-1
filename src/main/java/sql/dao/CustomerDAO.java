@@ -24,7 +24,7 @@ public class CustomerDAO {
     private DBConnector connector = DBConnector.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
-    public List<Customer> selectCustomerInformation(int customerId, String adressType) {
+    public Customer selectCustomerInformation(int customerId, String adressType) {
         AdressMaker adressMaker;
         Connection connection = connector.getConnection();
         List<Customer> customers = new ArrayList<>();
@@ -91,6 +91,6 @@ public class CustomerDAO {
             logger.info(ex.getMessage(), ex);
         }
 
-        return customers;
+        return customers.get(0);
     }
 }
