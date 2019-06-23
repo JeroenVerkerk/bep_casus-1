@@ -20,8 +20,7 @@ import sql.models.Bank;
 import sql.models.Company;
 
 
-public class CustomerDAO {
-    private DBConnector connector = DBConnector.getInstance();
+public class CustomerDAO extends BaseDao{
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
     private static CustomerDAO singleInstance;
 
@@ -32,17 +31,16 @@ public class CustomerDAO {
         return singleInstance;
     }
 
-    public Customer selectCustomerInformation(int customerId, String adressType) {
+    public Customer selectCustomerInformation(int customerId) {
 
         List<Customer> customers = new ArrayList<>();
 
-        try (Connection connection = connector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?")) {
+        try (Connection connection = super.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = 'F'")) {
 
             stmt.setInt(1, customerId);
             stmt.setInt(2, customerId);
             stmt.setInt(3, customerId);
-            stmt.setString(4, adressType);
 
             customers.add(createInformation(stmt));
 

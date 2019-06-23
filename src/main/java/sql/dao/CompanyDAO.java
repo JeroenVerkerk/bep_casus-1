@@ -15,8 +15,7 @@ import sql.models.Adress;
 import sql.models.Bank;
 import sql.models.Company;
 
-public class CompanyDAO {
-    private DBConnector dbConnector = DBConnector.getInstance();
+public class CompanyDAO extends  BaseDao{
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
     private static CompanyDAO singleInstance;
 
@@ -27,14 +26,13 @@ public class CompanyDAO {
         return singleInstance;
     }
 
-    public Company selectCompanyInfomation(int customerId, String adressType) {
+    public Company selectCompanyInfomation(int customerId) {
         List<Company> companies = new ArrayList<>();
 
-        try (Connection connection = dbConnector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = ?");){
+        try (Connection connection  = super.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = 'F'");){
             stmt.setInt(1, customerId);
             stmt.setInt(2, customerId);
-            stmt.setString(3, adressType);
 
             companies.add(createInformation(stmt));
 
