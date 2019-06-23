@@ -179,6 +179,9 @@ public class Convert {
     }
 
     public String paddOrSnip(int maxLength, String content) {
+        if (content == null) {
+            return " ".repeat(Math.max(0, maxLength ));
+        }
         int actualLength = content.length();
         if (actualLength >= maxLength) {
             try {
