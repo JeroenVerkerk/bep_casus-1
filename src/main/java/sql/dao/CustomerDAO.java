@@ -33,10 +33,8 @@ public class CustomerDAO {
     }
 
     public Customer selectCustomerInformation(int customerId, String adressType) {
-        AdressMaker adressMaker;
+
         List<Customer> customers = new ArrayList<>();
-        Salutation salutation;
-        String iban;
 
         try (Connection connection = connector.getConnection();
              PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?")) {
@@ -46,61 +44,72 @@ public class CustomerDAO {
             stmt.setInt(3, customerId);
             stmt.setString(4, adressType);
 
-            try(ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    adressMaker = new AdressMaker(rs.getString("straat"), rs.getString("plaats"), rs.getString("huisnummer"), rs.getString("postcode"));
-
-                    String firstName = rs.getString("voornaam");
-                    String lastName = rs.getString("achternaam");
-                    String middleName = rs.getString("tussenvoegsel");
-                    String street = adressMaker.getStreet();
-                    String houseNumber = adressMaker.getHouseNumber();
-                    String postalcode = adressMaker.getPostalcode();
-                    String city = adressMaker.getCity();
-
-                    String bic = rs.getString("bic");
+            customers.add(createInformation(stmt));
 
 
-                    if (rs.getString("geslacht").equals("m")) {
-                        salutation = Salutation.DHR;
-                    }
-                    else {
-                        salutation = Salutation.MVR;
-                    }
-
-                    if (rs.getString("bankrek") != null) {
-                        iban = rs.getString("bankrek");
-                    }
-                    else {
-                        iban = rs.getString("giro");
-                    }
-
-                    Name name = new Name(salutation, firstName, lastName, middleName);
-                    Bank bank = new Bank(iban, bic);
-                    Adress adress = new Adress(street, postalcode, city, houseNumber);
-                    if (rs.getString("bedrijfsnaam") == null) {
-
-                        Customer customer = new Customer(name, adress, bank);
-                        customers.add(customer);
-                    }
-                    else {
-                        String companyName = rs.getString("bedrijfsnaam");
-                        String vat = rs.getString("vat");
-
-                        Company company = new Company(companyName, vat, adress, bank);
-                        Customer customer = new Customer(name, adress, bank, company);
-                        customers.add(customer);
-                    }
-                }
-            } catch (SQLException ex) {
-                logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
-                logger.info(ex.getMessage(), ex);
-            }
         } catch(SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
 
         return customers.get(0);
+    }
+
+    private Customer createInformation(PreparedStatement stmt) {
+        AdressMaker adressMaker;
+        Salutation salutation;
+        String iban;
+        Customer customer = null;
+
+        try(ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                adressMaker = new AdressMaker(rs.getString("straat"), rs.getString("plaats"), rs.getString("huisnummer"), rs.getString("postcode"));
+
+                String firstName = rs.getString("voornaam");
+                String lastName = rs.getString("achternaam");
+                String middleName = rs.getString("tussenvoegsel");
+                String street = adressMaker.getStreet();
+                String houseNumber = adressMaker.getHouseNumber();
+                String postalcode = adressMaker.getPostalcode();
+                String city = adressMaker.getCity();
+
+                String bic = rs.getString("bic");
+
+
+                if (rs.getString("geslacht").equals("m")) {
+                    salutation = Salutation.DHR;
+                }
+                else {
+                    salutation = Salutation.MVR;
+                }
+
+                if (rs.getString("bankrek") != null) {
+                    iban = rs.getString("bankrek");
+                }
+                else {
+                    iban = rs.getString("giro");
+                }
+
+                Name name = new Name(salutation, firstName, lastName, middleName);
+                Bank bank = new Bank(iban, bic);
+                Adress adress = new Adress(street, postalcode, city, houseNumber);
+                if (rs.getString("bedrijfsnaam") == null) {
+
+                    customer = new Customer(name, adress, bank);
+                }
+                else {
+                    String companyName = rs.getString("bedrijfsnaam");
+                    String vat = rs.getString("vat");
+
+                    Company company = new Company(companyName, vat, adress, bank);
+                    customer = new Customer(name, adress, bank, company);
+                }
+            }
+        } catch (SQLException ex) {
+            logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
+            logger.info(ex.getMessage(), ex);
+        }
+
+        return customer;
     }
 }
