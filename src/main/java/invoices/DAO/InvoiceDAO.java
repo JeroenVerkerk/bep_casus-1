@@ -1,4 +1,4 @@
-package invoices.DAO;
+package invoices.dao;
 
 import invoices.Invoice;
 import invoices.InvoiceLine;

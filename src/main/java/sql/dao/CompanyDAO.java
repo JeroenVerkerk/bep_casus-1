@@ -1,4 +1,4 @@
-package sql.DAO;
+package sql.dao;
 
 import sql.connector.DBConnector;
 import org.slf4j.Logger;
@@ -18,6 +18,14 @@ import sql.models.Company;
 public class CompanyDAO {
     private DBConnector dbConnector = DBConnector.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+    private static CompanyDAO singleInstance;
+
+    public static CompanyDAO getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new CompanyDAO();
+        }
+        return singleInstance;
+    }
 
     public Company selectCompanyInfomation(int customerId, String adressType) {
         AdressMaker adressMaker;

@@ -1,4 +1,4 @@
-package sql.DAO;
+package sql.dao;
 
 import sql.models.Customer;
 import sql.connector.DBConnector;
@@ -23,6 +23,14 @@ import sql.models.Company;
 public class CustomerDAO {
     private DBConnector connector = DBConnector.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
+    private static CustomerDAO singleInstance;
+
+    public static CustomerDAO getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new CustomerDAO();
+        }
+        return singleInstance;
+    }
 
     public Customer selectCustomerInformation(int customerId, String adressType) {
         AdressMaker adressMaker;
