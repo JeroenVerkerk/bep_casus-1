@@ -1,8 +1,8 @@
-package IEF;
+package ief;
 
-import Invoices.Invoice;
-import Invoices.InvoiceDAO;
-import Invoices.InvoiceLine;
+import invoices.Invoice;
+import invoices.InvoiceLine;
+import invoices.dao.InvoiceDAO;
 import sql.dao.CompanyDAO;
 import sql.dao.CustomerDAO;
 import sql.models.Company;
@@ -123,7 +123,7 @@ public class Convert {
         for (Invoice invoice : invoices) {
             invoiceStringBuilder.append("F");
 
-            int date = invoice.parsedDate();
+            int date = invoice.getParsedDate();
             String strDate = paddOrSnip(6, String.valueOf(date));
             int finalDate = Integer.parseInt(strDate);
             invoiceStringBuilder.append(finalDate);
