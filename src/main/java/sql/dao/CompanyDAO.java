@@ -61,7 +61,7 @@ public class CompanyDAO {
                 String postalcode = adressMaker.getPostalcode();
                 String city = adressMaker.getCity();
                 String companyName = rs.getString("bedrijfsnaam");
-                String vatNumber = rs.getString("vatNumber");
+                String vatNumber = rs.getString("vat");
                 String iban;
                 if (rs.getString("bankrek") != null) {
                     iban = rs.getString("bankrek");
