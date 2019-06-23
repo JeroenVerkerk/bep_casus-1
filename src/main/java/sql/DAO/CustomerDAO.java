@@ -22,18 +22,16 @@ import sql.models.Company;
 
 public class CustomerDAO {
     private DBConnector connector = DBConnector.getInstance();
-    private Connection connection;
-    private AdressMaker adressMaker;
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
-    public List<Customer> selectCustomerInformation(int customerId, String adressType) {
-        connection = connector.getConnection();
+    public Customer selectCustomerInformation(int customerId, String adressType) {
+        AdressMaker adressMaker;
+        Connection connection = connector.getConnection();
         List<Customer> customers = new ArrayList<>();
         Salutation salutation;
-        String IBAN;
+        String iban;
 
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?");
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Persoon AS persoon, bifi.Klant AS klant, bifi.Adres AS adres WHERE persoon.klantid = ? AND adres.klantid = ? AND klant.klantid = ? AND adres.type = ?")){
             stmt.setInt(1, customerId);
             stmt.setInt(2, customerId);
             stmt.setInt(3, customerId);
@@ -62,14 +60,14 @@ public class CustomerDAO {
                 }
 
                 if (rs.getString("bankrek") != null) {
-                    IBAN = rs.getString("bankrek");
+                    iban = rs.getString("bankrek");
                 }
                 else {
-                    IBAN = rs.getString("giro");
+                    iban = rs.getString("giro");
                 }
 
                 Name name = new Name(salutation, firstName, lastName, middleName);
-                Bank bank = new Bank(IBAN, bic);
+                Bank bank = new Bank(iban, bic);
                 Adress adress = new Adress(street, postalcode, city, houseNumber);
                 if (rs.getString("bedrijfsnaam") == null) {
 
@@ -85,14 +83,14 @@ public class CustomerDAO {
                     customers.add(customer);
                 }
             }
-
             rs.close();
+            stmt.close();
             connection.close();
         }catch(SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
 
-        return customers;
+        return customers.get(0);
     }
 }

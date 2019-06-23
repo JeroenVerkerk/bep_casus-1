@@ -1,19 +1,19 @@
 package sql.models;
 
 public class Bank {
-    private String IBAN;
-    private String BIC;
+    private String iban;
+    private String bic;
 
-    public Bank(String IBAN, String BIC) {
-        this.IBAN = IBAN;
-        this.BIC = BIC;
+    public Bank(String iban, String bic) {
+        this.iban = iban;
+        this.bic = bic;
     }
 
-    public String getIBAN() {
-        return IBAN;
+    public String getIban() {
+        return iban;
     }
 
-    public String getBIC() {
-        return BIC;
+    public String getBic() {
+        return bic;
     }
 }
