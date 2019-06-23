@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 public class DBConnector {
     private Connection conn;
     private static final Logger logger = LoggerFactory.getLogger(DBConnector.class);
-    private static DBConnector single_instance;
+    private static DBConnector sinlgeInstance;
 
     public static DBConnector getInstance() {
-        if (single_instance == null)
+        if (sinlgeInstance == null)
         {
-            single_instance = new DBConnector();
+            sinlgeInstance = new DBConnector();
         }
-        return single_instance;
+        return sinlgeInstance;
     }
 
     public Connection getConnection() {

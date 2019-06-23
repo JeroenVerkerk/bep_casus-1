@@ -1,8 +1,5 @@
 package sql.models;
 
-import sql.models.Adress;
-import sql.models.Bank;
-
 public class Company {
     private String companyName;
     private String btwNumber;

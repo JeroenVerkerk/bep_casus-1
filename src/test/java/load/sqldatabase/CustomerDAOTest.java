@@ -21,51 +21,51 @@ public class CustomerDAOTest {
 
     @Test
     public void TestCustomerName() {
-        assertEquals("Jan", customerDAO.selectCustomerInformation(1, "F").get(0).getName().getFirstName());
+        assertEquals("Jan", customerDAO.selectCustomerInformation(1, "F").getName().getFirstName());
     }
 
     @Test
     public void TestCustomerMiddleName() {
-        assertEquals(null, customerDAO.selectCustomerInformation(1, "F").get(0).getName().getMiddleName());
+        assertEquals(null, customerDAO.selectCustomerInformation(1, "F").getName().getMiddleName());
     }
 
     @Test
     public void TestCustomerLastName() {
-        assertEquals("Janssen", customerDAO.selectCustomerInformation(1, "F").get(0).getName().getLastName());
+        assertEquals("Janssen", customerDAO.selectCustomerInformation(1, "F").getName().getLastName());
     }
 
     @Test
     public void TestCustomerSalutation() {
-        assertEquals(Enums.Salutation.DHR, customerDAO.selectCustomerInformation(2, "F").get(0).getName().getSalutation());
+        assertEquals(Enums.Salutation.DHR, customerDAO.selectCustomerInformation(2, "F").getName().getSalutation());
     }
 
     @Test
     public void TestCustomerIsCompany() {
-        assertEquals("Helma", customerDAO.selectCustomerInformation(1, "F").get(0).getCompany().getCompanyName());
+        assertEquals("Helma", customerDAO.selectCustomerInformation(1, "F").getCompany().getCompanyName());
     }
 
     @Test
     public void TestCustomerIsNotACompany() {
-        assertEquals(null, customerDAO.selectCustomerInformation(4, "F").get(0).getCompany());
+        assertEquals(null, customerDAO.selectCustomerInformation(4, "F").getCompany());
     }
 
     @Test
     public void TestCustomerWithGiro() {
-        assertEquals("giro882", customerDAO.selectCustomerInformation(5, "F").get(0).getBank().getIBAN());
+        assertEquals("giro882", customerDAO.selectCustomerInformation(5, "F").getBank().getIban());
     }
 
     @Test
     public void TestCustomerOldAdressMOATA() {
-        assertEquals("Rotterdam", customerDAO.selectCustomerInformation(2, "F").get(0).getAdress().getCity());
+        assertEquals("Rotterdam", customerDAO.selectCustomerInformation(2, "F").getAdress().getCity());
     }
 
     @Test
     public void TestCustomerOldAdressKDLRA() {
-        assertEquals("Zevenhuizen", customerDAO.selectCustomerInformation(3, "F").get(0).getAdress().getCity());
+        assertEquals("Zevenhuizen", customerDAO.selectCustomerInformation(3, "F").getAdress().getCity());
     }
 
     @Test
     public void TestCustomerOldAdressNIPJK() {
-        assertEquals("Den Haag", customerDAO.selectCustomerInformation(2, "A").get(0).getAdress().getCity());
+        assertEquals("Den Haag", customerDAO.selectCustomerInformation(2, "A").getAdress().getCity());
     }
 }
