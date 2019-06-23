@@ -1,4 +1,4 @@
-package load.sqldatabase;
+package load.SQLDatabase;
 
 import enums.Enums;
 import org.junit.jupiter.api.Test;
