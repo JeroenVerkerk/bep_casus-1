@@ -5,6 +5,7 @@ import invoices.DAO.InvoiceDAO;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ class MongoConnectorTest {
 
     }
 
+    @Disabled
     @Test
     void testGetInvoiceInfo() {
         ArrayList<Invoice> invoices = invoiceDAO.getInvoices();
