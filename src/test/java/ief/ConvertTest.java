@@ -108,10 +108,6 @@ class ConvertTest {
 
     }
 
-    @Test
-    void getCustomerIDByMonth() {
-    }
-
     @AfterEach
     void tearDown() {
         convert = null;
