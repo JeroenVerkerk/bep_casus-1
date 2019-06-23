@@ -1,7 +1,4 @@
-package sql.models;
-
-import sql.models.Adress;
-import sql.models.Bank;
+package SQL.models;
 
 public class Company {
     private String companyName;

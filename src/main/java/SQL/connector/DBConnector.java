@@ -1,4 +1,4 @@
-package sql.connector;
+package SQL.connector;
 
 import java.sql.*;
 import java.util.Properties;

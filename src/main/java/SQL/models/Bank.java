@@ -1,4 +1,4 @@
-package sql.models;
+package SQL.models;
 
 public class Bank {
     private String IBAN;

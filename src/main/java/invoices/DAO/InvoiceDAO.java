@@ -1,5 +1,7 @@
-package Invoices;
+package invoices.DAO;
 
+import invoices.Invoice;
+import invoices.InvoiceLine;
 import com.mongodb.client.model.Filters;
 import mongoReader.MongoConnector;
 import org.bson.Document;

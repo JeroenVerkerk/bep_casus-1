@@ -1,6 +1,6 @@
-package sql.dao;
+package SQL.DAO;
 
-import sql.connector.DBConnector;
+import SQL.connector.DBConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import sql.models.Adress;
-import sql.models.Bank;
-import sql.models.Company;
+import SQL.models.Adress;
+import SQL.models.Bank;
+import SQL.models.Company;
 
 public class CompanyDAO {
     private DBConnector dbConnector = DBConnector.getInstance();

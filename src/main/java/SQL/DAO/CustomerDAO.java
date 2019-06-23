@@ -1,8 +1,8 @@
-package sql.dao;
+package SQL.DAO;
 
-import sql.models.Customer;
-import sql.connector.DBConnector;
-import sql.models.Name;
+import SQL.models.Customer;
+import SQL.connector.DBConnector;
+import SQL.models.Name;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,9 +15,9 @@ import java.util.List;
 
 import enums.Enums.*;
 
-import sql.models.Adress;
-import sql.models.Bank;
-import sql.models.Company;
+import SQL.models.Adress;
+import SQL.models.Bank;
+import SQL.models.Company;
 
 
 public class CustomerDAO {

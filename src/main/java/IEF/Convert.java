@@ -1,8 +1,8 @@
 package IEF;
 
-import Invoices.Invoice;
-import Invoices.InvoiceDAO;
-import Invoices.InvoiceLine;
+import invoices.DAO.InvoiceDAO;
+import invoices.Invoice;
+import invoices.InvoiceLine;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,7 @@ public class Convert {
         for (Invoice invoice : invoices) {
             invoiceStringBuilder.append("F");
 
-            int date = invoice.parsedDate();
+            int date = invoice.getParsedDate();
             String strDate = paddOrSnip(6, String.valueOf(date));
             int finalDate = Integer.parseInt(strDate);
             invoiceStringBuilder.append(finalDate);
