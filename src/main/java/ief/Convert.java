@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class Convert {
     private InvoiceDAO invoiceDAO = InvoiceDAO.getInstance();
-    private CustomerDAO customerDAO = new CustomerDAO();
-    private CompanyDAO companyDAO = new CompanyDAO();
+    private CustomerDAO customerDAO = CustomerDAO.getInstance();
+    private CompanyDAO companyDAO = CompanyDAO.getInstance();
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
