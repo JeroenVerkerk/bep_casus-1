@@ -1,4 +1,4 @@
-package sql.dao;
+package sql.DAO;
 
 import sql.models.Customer;
 import sql.connector.DBConnector;

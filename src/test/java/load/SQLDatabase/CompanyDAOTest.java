@@ -1,8 +1,8 @@
-package load.sqldatabase;
+package load.SQLDatabase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import sql.dao.CompanyDAO;
+import sql.DAO.CompanyDAO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

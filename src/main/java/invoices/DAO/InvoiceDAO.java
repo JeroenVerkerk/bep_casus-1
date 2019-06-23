@@ -1,5 +1,7 @@
-package Invoices;
+package invoices.DAO;
 
+import invoices.Invoice;
+import invoices.InvoiceLine;
 import com.mongodb.client.model.Filters;
 import mongoReader.MongoConnector;
 import org.bson.Document;
@@ -43,6 +45,9 @@ public class InvoiceDAO {
 
         while (iterator.hasNext()) {
             Invoice invoice = iterator.next();
+            System.out.println(invoice.getDate().getMonth());
+            System.out.println(month);
+            System.out.println(invoice.getDate().getMonth() != month);
             if (invoice.getDate().getMonth() != month) {
                 invoices.remove(invoice);
             }
