@@ -18,17 +18,23 @@ import sql.models.Company;
 public class CompanyDAO {
     private DBConnector dbConnector = DBConnector.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+    private static CompanyDAO singleInstance;
+
+    public static CompanyDAO getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new CompanyDAO();
+        }
+        return singleInstance;
+    }
 
     public Company selectCompanyInfomation(int customerId, String adressType) {
         AdressMaker adressMaker;
-        Connection connection = dbConnector.getConnection();
+
         List<Company> companies = new ArrayList<>();
 
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = ?")){
-            stmt.setInt(1, customerId);
-            stmt.setInt(2, customerId);
-            stmt.setString(3, adressType);
-            ResultSet rs = stmt.executeQuery();
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement stmt = createPreparedStatement(connection, customerId, adressType);
+             ResultSet rs = stmt.executeQuery()){
 
             while (rs.next()) {
 
@@ -54,14 +60,21 @@ public class CompanyDAO {
                 Company company = new Company(companyName, btwNumber, adress, bank);
                 companies.add(company);
             }
-            rs.close();
-            stmt.close();
-            connection.close();
         }catch(SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
 
         return companies.get(0);
+    }
+
+    private PreparedStatement createPreparedStatement(Connection connection, int customerId, String addressType) throws SQLException {
+        String sql = "SELECT * FROM bifi.Adres AS adres, bifi.Klant AS klant WHERE adres.klantid = ? AND klant.klantid = ? AND adres.type = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, customerId);
+        stmt.setInt(2, customerId);
+        stmt.setString(3, addressType);
+
+        return stmt;
     }
 }

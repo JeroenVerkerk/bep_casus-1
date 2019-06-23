@@ -1,6 +1,7 @@
-package Invoices;
+package invoices;
 
-import java.text.ParseException;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,17 +33,11 @@ public class Invoice {
         return this.date;
     }
 
-    public int parsedDate(){
-        SimpleDateFormat format = new SimpleDateFormat("DDMMYY");
+    public int getParsedDate() {
+        DateFormat formatter = new SimpleDateFormat("ddMMYY");
+        String formattedDate = formatter.format(this.getDate());
+        return Integer.parseInt(formattedDate);
 
-        Date date = this.getDate();
-        try {
-            date = format.parse(date.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return Integer.parseInt(date.toString());
     }
 
     public void setDate(Date date) {
@@ -65,6 +60,7 @@ public class Invoice {
         this.invoiceLines = invoiceLines;
     }
 
+
     public double getCustomerId() {
         return this.customerId;
     }
@@ -81,7 +77,7 @@ public class Invoice {
         }
 
         return "Factuurnummer: " + getInvoiceId() +
-                "\nDatum: " + getDate() +
+                "\nDatum: " + getParsedDate() +
                 "\nOmschrijving: " + getInvoiceId() +
                 "\nKlant: " + getCustomerId() +
                 "\nFactuurregels:" + result.toString();
