@@ -21,6 +21,15 @@ import sql.models.Company;
 
 public class CustomerDAO extends BaseDao implements ICustomerDAO{
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
+    private static CustomerDAO sinlgeInstance;
+
+    public static CustomerDAO getInstance() {
+        if (sinlgeInstance == null)
+        {
+            sinlgeInstance = new CustomerDAO();
+        }
+        return sinlgeInstance;
+    }
 
     public Customer selectCustomerInformation(int customerId) {
 

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sql.dao.CustomerDAO;
 import sql.dao.ICustomerDAO;
-import sql.models.Customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,7 +17,7 @@ public class CustomerDAOTest {
 
     @BeforeEach
     public void BeforeEach() {
-        customerDAO = new CustomerDAO();
+        customerDAO = CustomerDAO.getInstance();
     }
 
     @Test

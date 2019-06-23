@@ -16,6 +16,15 @@ import sql.models.Company;
 
 public class CompanyDAO extends  BaseDao implements ICompanyDAO{
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+    private static CompanyDAO sinlgeInstance;
+
+    public static CompanyDAO getInstance() {
+        if (sinlgeInstance == null)
+        {
+            sinlgeInstance = new CompanyDAO();
+        }
+        return sinlgeInstance;
+    }
 
     public Company selectCompanyInfomation(int customerId) {
         List<Company> companies = new ArrayList<>();

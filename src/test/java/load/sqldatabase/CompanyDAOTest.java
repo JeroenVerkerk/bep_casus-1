@@ -12,7 +12,7 @@ public class CompanyDAOTest {
 
     @BeforeEach
     public void BeforeEach() {
-        companyDao = new CompanyDAO();
+        companyDao = CompanyDAO.getInstance();
     }
 
     @Test
