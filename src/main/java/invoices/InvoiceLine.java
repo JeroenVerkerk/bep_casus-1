@@ -5,14 +5,14 @@ public class InvoiceLine {
     private double amount;
     private double totalPrice;
     private String unit;
-    private String VAT;
+    private String vat;
 
-    public InvoiceLine(String productName, double amount, double totalPrice, String unit, String VAT) {
+    public InvoiceLine(String productName, double amount, double totalPrice, String unit, String vat) {
         this.productName = productName;
         this.amount = amount;
         this.totalPrice = totalPrice;
         this.unit = unit;
-        this.VAT = VAT;
+        this.vat = vat;
     }
 
     public String getProductName() {
@@ -47,12 +47,12 @@ public class InvoiceLine {
         this.unit = unit;
     }
 
-    public String getVAT() {
-        return this.VAT;
+    public String getVat() {
+        return this.vat;
     }
 
-    public void setVAT(String VAT) {
-        this.VAT = VAT;
+    public void setVat(String vat) {
+        this.vat = vat;
     }
 
     public String toString() {
@@ -60,6 +60,6 @@ public class InvoiceLine {
                 "\nAantal: " + getAmount() +
                 "\nPrijs: " + getTotalPrice() +
                 "\nEenheid: " + getUnit() +
-                "\nBTW: " + getVAT() + "\n";
+                "\nBTW: " + getVat() + "\n";
     }
 }
