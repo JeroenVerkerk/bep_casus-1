@@ -21,7 +21,7 @@ public class CompanyDAOTest {
 
     @Test
     public void TestCompanyBTWNumber() {
-        assertEquals("NL001234567B01", companyDao.selectCompanyInfomation(1, "F").getVat());
+        assertEquals("NL001234567B01", companyDao.selectCompanyInfomation(1, "F").getVatNumber());
     }
 
     @Test

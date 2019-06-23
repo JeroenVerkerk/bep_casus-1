@@ -61,7 +61,7 @@ public class CompanyDAO {
                 String postalcode = adressMaker.getPostalcode();
                 String city = adressMaker.getCity();
                 String companyName = rs.getString("bedrijfsnaam");
-                String vat = rs.getString("vat");
+                String vatNumber = rs.getString("vatNumber");
                 String iban;
                 if (rs.getString("bankrek") != null) {
                     iban = rs.getString("bankrek");
@@ -73,7 +73,7 @@ public class CompanyDAO {
 
                 Adress adress = new Adress(street, postalcode, city, houseNumber);
                 Bank bank = new Bank(iban, bic);
-                company = new Company(companyName, vat, adress, bank);
+                company = new Company(companyName, vatNumber, adress, bank);
             }
         }catch(SQLException ex) {
             logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE EXECUTING TO STATEMENT XXXXXXXXXXXXXXXXXXXXXXXXXX");

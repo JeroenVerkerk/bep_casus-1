@@ -99,9 +99,9 @@ public class CustomerDAO {
                 }
                 else {
                     String companyName = rs.getString("bedrijfsnaam");
-                    String vat = rs.getString("vat");
+                    String vatNumber = rs.getString("vatNumber");
 
-                    Company company = new Company(companyName, vat, adress, bank);
+                    Company company = new Company(companyName, vatNumber, adress, bank);
                     customer = new Customer(name, adress, bank, company);
                 }
             }
