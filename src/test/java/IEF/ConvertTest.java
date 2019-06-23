@@ -18,17 +18,17 @@ class ConvertTest {
     @Disabled
     @Test
     void getCompanyInfo() {
-        assertEquals("B", convert.getCompanyInfo());
+        assertEquals("B", convert.getCompanyInfo(2, "F"));
     }
 
     @Test
     void getCustomerInfo() {
-        assertEquals("K", convert.getCustomerInfo());
+        assertEquals("K", convert.getCustomerInfo(1, "F"));
     }
 
     @Test
     void getInvoiceInfo() {
-        assertEquals("F", convert.getInvoiceInfo(5));
+        assertEquals("F", convert.getInvoiceInfo(4));
     }
 
     @Test
@@ -99,4 +99,12 @@ class ConvertTest {
         assertNull(convert);
     }
 
+    @Test
+    void combineInfoToIEF() {
+        assertEquals("F", convert.combineInfoToIEF(5));
+    }
+
+    @Test
+    void getCustomerIDByMonth() {
+    }
 }
