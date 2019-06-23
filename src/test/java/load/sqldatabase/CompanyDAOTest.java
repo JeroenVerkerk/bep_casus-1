@@ -11,7 +11,7 @@ public class CompanyDAOTest {
 
     @BeforeEach
     public void BeforeEach() {
-        companyDao = new CompanyDAO();
+        companyDao = CompanyDAO.getInstance();
     }
 
     @Test
@@ -21,7 +21,7 @@ public class CompanyDAOTest {
 
     @Test
     public void TestCompanyBTWNumber() {
-        assertEquals("NL001234567B01", companyDao.selectCompanyInfomation(1, "F").getBtwNumber());
+        assertEquals("NL001234567B01", companyDao.selectCompanyInfomation(1, "F").getVat());
     }
 
     @Test

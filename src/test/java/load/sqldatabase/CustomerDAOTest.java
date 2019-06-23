@@ -16,7 +16,7 @@ public class CustomerDAOTest {
 
     @BeforeEach
     public void BeforeEach() {
-        customerDAO = new CustomerDAO();
+        customerDAO = CustomerDAO.getInstance();
     }
 
     @Test
