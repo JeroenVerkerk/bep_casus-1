@@ -11,6 +11,7 @@ import sql.models.Customer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Convert {
@@ -149,10 +150,10 @@ public class Convert {
             String productName = splitProductDescription(line.getProductName());
             lineStringBuilder.append(productName);
 
-            double ammount = doubleConverter(3, 2, line.getAmount());
+            String ammount = doubleConverter(3, line.getAmount());
             lineStringBuilder.append(ammount);
 
-            double price = doubleConverter(5, 2, line.getTotalPrice() / ammount);
+            String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
             lineStringBuilder.append(price);
 
             int date = invoice.getParsedDate();
@@ -178,10 +179,23 @@ public class Convert {
         return productDescription;
     }
 
-    public double doubleConverter(int prefixLength, int decimals, double getal) {
-        //todo: implementation & test
+    public String doubleConverter(int prefixLength, double getal) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        //Double (5,2): 10,04 = 0001004 (dus zonder comma, met voorloop nullen)
+        int getalWithoutDecimal = (int) getal;
+        int numberLength = String.valueOf(getalWithoutDecimal).length();
+        StringBuilder sb = new StringBuilder();
+        while (numberLength < prefixLength) {
+            numberLength++;
+            sb.append('0');
+        }
+        String padded = sb.toString() + getalWithoutDecimal;
 
-        return getal;
+        String fraction = decimalFormat.format(getal % 1);
+        String substring = fraction.length() > 2 ? fraction.substring(fraction.length() - 2) : fraction;
+
+
+        return padded + substring;
     }
 
     public String paddOrSnip(int maxLength, String content) {

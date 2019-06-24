@@ -108,6 +108,13 @@ class ConvertTest {
 
     }
 
+    @Test
+    void doubleConverter() {
+        String test = convert.doubleConverter(5,10.04);
+
+        assertEquals("0001004", test);
+    }
+
     @AfterEach
     void tearDown() {
         convert = null;
