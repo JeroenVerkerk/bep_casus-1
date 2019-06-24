@@ -136,12 +136,12 @@ public class Convert {
             invoiceStringBuilder.append("\n");
 
             ArrayList<InvoiceLine> invoiceLines = invoice.getInvoiceLines();
-            invoiceStringBuilder.append(getInvoiceLines(invoiceLines));
+            invoiceStringBuilder.append(getInvoiceLinesFromInvoice(invoiceLines, invoice));
         }
         return invoiceStringBuilder.toString();
     }
 
-    public String getInvoiceLines(ArrayList<InvoiceLine> invoiceLines) {
+    public String getInvoiceLinesFromInvoice(ArrayList<InvoiceLine> invoiceLines, Invoice invoice) {
         StringBuilder lineStringBuilder = new StringBuilder();
         for (InvoiceLine line : invoiceLines) {
             lineStringBuilder.append("R");
@@ -155,7 +155,13 @@ public class Convert {
             double price = doubleConverter(5, 2, line.getTotalPrice() / ammount);
             lineStringBuilder.append(price);
 
-            // TODO: BTW type, regel datum, regel tijd
+            int date = invoice.getParsedDate();
+            String strDate = paddOrSnip(6, String.valueOf(date));
+            lineStringBuilder.append(Integer.parseInt(strDate));
+
+            int time = invoice.getParsedTime();
+            String strTime = paddOrSnip(4, String.valueOf(time));
+            lineStringBuilder.append(Integer.parseInt(strTime));
             String unit = paddOrSnip(6, line.getUnit());
             lineStringBuilder.append(unit);
             lineStringBuilder.append("\n");

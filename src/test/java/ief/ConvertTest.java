@@ -40,7 +40,7 @@ class ConvertTest {
     @Test
     void getInvoiceLines() {
         //Mock list of invoicelines?
-//        assertEquals("R", convert.getInvoiceLines());
+//        assertEquals("R", convert.getInvoiceLinesFromInvoice());
     }
 
 

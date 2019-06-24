@@ -40,6 +40,12 @@ public class Invoice {
 
     }
 
+    public int getParsedTime() {
+        DateFormat formatter = new SimpleDateFormat("HHmm");
+        String formattedTime = formatter.format(this.getDate());
+        return Integer.parseInt(formattedTime);
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -72,7 +78,7 @@ public class Invoice {
     public String toString() {
         StringBuilder result = new StringBuilder();
 
-        for (InvoiceLine invoiceLine: invoiceLines) {
+        for (InvoiceLine invoiceLine : invoiceLines) {
             result.append(invoiceLine.toString());
         }
 
