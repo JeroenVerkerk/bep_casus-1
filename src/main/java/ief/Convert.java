@@ -3,8 +3,8 @@ package ief;
 import invoices.Invoice;
 import invoices.InvoiceLine;
 import invoices.dao.InvoiceDAO;
-import sql.dao.ICompanyDAO;
-import sql.dao.ICustomerDAO;
+import sql.dao.CompanyDAO;
+import sql.dao.CustomerDAO;
 import sql.models.Company;
 import sql.models.Customer;
 
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class Convert {
     private InvoiceDAO invoiceDAO = InvoiceDAO.getInstance();
-    private ICustomerDAO iCustomerDAO;
-    private ICompanyDAO iCompanyDAO;
+    private CustomerDAO customerDAO = CustomerDAO.getInstance();
+    private CompanyDAO companyDAO = CompanyDAO.getInstance();
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
@@ -38,7 +38,7 @@ public class Convert {
 
     public String getCompanyInfo(int klantID, String addressType) {
         StringBuilder companyStringBuilder = new StringBuilder();
-        Company company = iCompanyDAO.selectCompanyInfomation(klantID);
+        Company company = companyDAO.selectCompanyInfomation(klantID);
         companyStringBuilder.append("B");
 
         String companyName = paddOrSnip(60, company.getCompanyName());
@@ -71,7 +71,7 @@ public class Convert {
 
     public String getCustomerInfo(int klantID, String addressType) {
         StringBuilder customerStringBuilder = new StringBuilder();
-        Customer customer = iCustomerDAO.selectCustomerInformation(klantID);
+        Customer customer = customerDAO.selectCustomerInformation(klantID);
         customerStringBuilder.append("K");
 
 
