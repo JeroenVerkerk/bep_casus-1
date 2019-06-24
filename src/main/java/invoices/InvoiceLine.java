@@ -1,13 +1,15 @@
 package invoices;
 
+import enums.Vat;
+
 public class InvoiceLine {
     private String productName;
     private double amount;
     private double totalPrice;
     private String unit;
-    private String vat;
+    private Vat vat;
 
-    public InvoiceLine(String productName, double amount, double totalPrice, String unit, String vat) {
+    public InvoiceLine(String productName, double amount, double totalPrice, String unit, Vat vat) {
         this.productName = productName;
         this.amount = amount;
         this.totalPrice = totalPrice;
@@ -47,11 +49,11 @@ public class InvoiceLine {
         this.unit = unit;
     }
 
-    public String getVat() {
+    public Vat getVat() {
         return this.vat;
     }
 
-    public void setVat(String vat) {
+    public void setVat(Vat vat) {
         this.vat = vat;
     }
 

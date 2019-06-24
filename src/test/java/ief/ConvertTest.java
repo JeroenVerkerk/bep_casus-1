@@ -1,5 +1,6 @@
 package ief;
 
+import enums.NegativeTokens;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -87,16 +88,16 @@ class ConvertTest {
         char eight = convert.negativeNumberConverter(8);
         char nine = convert.negativeNumberConverter(9);
         char def = convert.negativeNumberConverter('a');
-        assertEquals(' ', zero);
-        assertEquals('!', one);
-        assertEquals('"', two);
-        assertEquals('#', three);
-        assertEquals('$', four);
-        assertEquals('%', five);
-        assertEquals('&', six);
-        assertEquals('\\', seven);
-        assertEquals('(', eight);
-        assertEquals(')', nine);
+        assertEquals(NegativeTokens.WhiteSpace.value, zero);
+        assertEquals(NegativeTokens.ExclamationMark.value, one);
+        assertEquals(NegativeTokens.DoubleQuote.value, two);
+        assertEquals(NegativeTokens.NumberSign.value, three);
+        assertEquals(NegativeTokens.Dollar.value, four);
+        assertEquals(NegativeTokens.Percent.value, five);
+        assertEquals(NegativeTokens.Ampersand.value, six);
+        assertEquals(NegativeTokens.DoubleBackslash.value, seven);
+        assertEquals(NegativeTokens.LeftParenthesis.value, eight);
+        assertEquals(NegativeTokens.RightParenthesis.value, nine);
         assertEquals('a', def);
     }
 

@@ -1,6 +1,6 @@
 package load.sqldatabase;
 
-import enums.Enums;
+import enums.Salutation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class CustomerDAOTest {
 
     @Test
     public void TestCustomerSalutation() {
-        assertEquals(Enums.Salutation.DHR, customerDAO.selectCustomerInformation(2).getName().getSalutation());
+        assertEquals(Salutation.DHR, customerDAO.selectCustomerInformation(2).getName().getSalutation());
     }
 
     @Test

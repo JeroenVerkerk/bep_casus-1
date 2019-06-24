@@ -1,6 +1,6 @@
 package sql.dao;
 
-import enums.Enums.Salutation;
+import enums.Salutation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sql.models.*;
