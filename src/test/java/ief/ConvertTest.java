@@ -40,7 +40,7 @@ class ConvertTest {
     @Test
     void getInvoiceLines() {
         //Mock list of invoicelines?
-//        assertEquals("R", convert.getInvoiceLines());
+//        assertEquals("R", convert.getInvoiceLinesFromInvoice());
     }
 
 
@@ -106,6 +106,13 @@ class ConvertTest {
         File file = new File("./invoice5.txt");
         assertTrue(file.exists());
 
+    }
+
+    @Test
+    void doubleConverter() {
+        String test = convert.doubleConverter(5,10.04);
+
+        assertEquals("0001004", test);
     }
 
     @AfterEach
