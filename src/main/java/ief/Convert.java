@@ -1,43 +1,128 @@
 package ief;
 
-import invoices.dao.InvoiceDAO;
 import invoices.Invoice;
 import invoices.InvoiceLine;
+import invoices.dao.InvoiceDAO;
+import sql.dao.CompanyDAO;
+import sql.dao.CustomerDAO;
+import sql.models.Company;
+import sql.models.Customer;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Convert {
     private InvoiceDAO invoiceDAO = InvoiceDAO.getInstance();
+    private CustomerDAO customerDAO = CustomerDAO.getInstance();
+    private CompanyDAO companyDAO = CompanyDAO.getInstance();
 
-    public void combineInfoToIEF(int maandNummer) {
-        StringBuilder finalString = new StringBuilder();
-        finalString.append(getInvoiceInfo(maandNummer));
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.generateFile(finalString.toString(), "./Invoice" + maandNummer + ".txt");
+    public void combineInfoToIEF(int maandNummer) throws IOException {
+        String finalString = getInvoiceInfo(maandNummer);
+        BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"));
+        writer.write(finalString);
+
+        writer.close();
     }
 
-    public String getCompanyInfo() {
+    public ArrayList<Integer> getCustomerIDByMonth(int maandNummer) {
+        ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
+        ArrayList<Integer> customerIDs = new ArrayList<>();
+        for (Invoice invoice : invoices) {
+            int id = (int) invoice.getCustomerId();
+            customerIDs.add(id);
+        }
+        return customerIDs;
+    }
+
+    public String getCompanyInfo(int klantID, String addressType) {
         StringBuilder companyStringBuilder = new StringBuilder();
+        Company company = companyDAO.selectCompanyInfomation(klantID);
         companyStringBuilder.append("B");
 
+        String companyName = paddOrSnip(60, company.getCompanyName());
+        companyStringBuilder.append(companyName);
+
+        String companyStreetName = paddOrSnip(60, company.getAdress().getStreet());
+        companyStringBuilder.append(companyStreetName);
+
+        String companyHouseNumber = paddOrSnip(10, company.getAdress().getHouseNumber());
+        companyStringBuilder.append(companyHouseNumber);
+
+        String companyPostalCode = paddOrSnip(6, company.getAdress().getPostalcode());
+        companyStringBuilder.append(companyPostalCode);
+
+        String companyCity = paddOrSnip(20, company.getAdress().getCity());
+        companyStringBuilder.append(companyCity);
+
+        String companyVatNumber = paddOrSnip(13, company.getVatNumber());
+        companyStringBuilder.append(companyVatNumber);
+
+        String companyIban = paddOrSnip(64, company.getBank().getIban());
+        companyStringBuilder.append(companyIban);
+
+        String companyBic = paddOrSnip(10, company.getBank().getBic());
+        companyStringBuilder.append(companyBic);
 
         companyStringBuilder.append("\n");
         return companyStringBuilder.toString();
     }
 
-    public String getCustomerInfo() {
+    public String getCustomerInfo(int klantID, String addressType) {
         StringBuilder customerStringBuilder = new StringBuilder();
+        Customer customer = customerDAO.selectCustomerInformation(klantID);
         customerStringBuilder.append("K");
 
 
+        String companyName = paddOrSnip(40, customer.getCompany().getCompanyName());
+        customerStringBuilder.append(companyName);
+
+        String salutation = paddOrSnip(6, customer.getName().getSalutation().salutationValue);
+        customerStringBuilder.append(salutation);
+
+        String firstName = paddOrSnip(20, customer.getName().getFirstName());
+        customerStringBuilder.append(firstName);
+
+        String middleName = paddOrSnip(7, customer.getName().getMiddleName());
+        customerStringBuilder.append(middleName);
+
+        String lastName = paddOrSnip(40, customer.getName().getLastName());
+        customerStringBuilder.append(lastName);
+
+        String streetName = paddOrSnip(60, customer.getAdress().getStreet());
+        customerStringBuilder.append(streetName);
+
+        String houseNumber = paddOrSnip(10, customer.getAdress().getHouseNumber());
+        customerStringBuilder.append(houseNumber);
+
+        String postalCode = paddOrSnip(6, customer.getAdress().getPostalcode());
+        customerStringBuilder.append(postalCode);
+
+        String cityName = paddOrSnip(20, customer.getAdress().getCity());
+        customerStringBuilder.append(cityName);
+
+        String vatNumber = paddOrSnip(13, customer.getCompany().getVatNumber());
+        customerStringBuilder.append(vatNumber);
+
+        String iban = paddOrSnip(64, customer.getBank().getIban());
+        customerStringBuilder.append(iban);
+
+        String bic = paddOrSnip(10, customer.getBank().getBic());
+        customerStringBuilder.append(bic);
+
+        customerStringBuilder.append("\n");
         return customerStringBuilder.toString();
     }
 
     public String getInvoiceInfo(int maandNummer) {
         StringBuilder invoiceStringBuilder = new StringBuilder();
         ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
-        invoiceStringBuilder.append("F");
         for (Invoice invoice : invoices) {
+            double ID = invoice.getCustomerId();
+            int intID = (int) ID;
+            invoiceStringBuilder.append(getCompanyInfo(intID, "F"));
+            invoiceStringBuilder.append(getCustomerInfo(intID, "F"));
             invoiceStringBuilder.append("F");
 
             int date = invoice.getParsedDate();
@@ -80,11 +165,9 @@ public class Convert {
 
     public String splitProductDescription(String productDescription) {
         if (productDescription.length() > 60) {
-            StringBuilder descStringBuilder = new StringBuilder();
-            descStringBuilder.append("\n");
-            descStringBuilder.append("T");
-            descStringBuilder.append(productDescription);
-            return descStringBuilder.toString();
+            return "\n" +
+                    "T" +
+                    productDescription;
         }
         return productDescription;
     }
@@ -96,6 +179,9 @@ public class Convert {
     }
 
     public String paddOrSnip(int maxLength, String content) {
+        if (content == null) {
+            return " ".repeat(Math.max(0, maxLength));
+        }
         int actualLength = content.length();
         if (actualLength >= maxLength) {
             try {

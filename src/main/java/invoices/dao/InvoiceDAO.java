@@ -11,8 +11,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class InvoiceDAO {
-    private final MongoConnector connection = MongoConnector.getInstance();
+public class InvoiceDAO {    private final MongoConnector connection = MongoConnector.getInstance();
     private static InvoiceDAO singleInstance;
 
     public static InvoiceDAO getInstance() {
