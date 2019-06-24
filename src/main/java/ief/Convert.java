@@ -1,5 +1,6 @@
 package ief;
 
+import enums.NegativeTokens;
 import invoices.Invoice;
 import invoices.InvoiceLine;
 import invoices.dao.InvoiceDAO;
@@ -79,7 +80,7 @@ public class Convert {
         String companyName = paddOrSnip(40, customer.getCompany().getCompanyName());
         customerStringBuilder.append(companyName);
 
-        String salutation = paddOrSnip(6, customer.getName().getSalutation().salutationValue);
+        String salutation = paddOrSnip(6, customer.getName().getSalutation().value);
         customerStringBuilder.append(salutation);
 
         String firstName = paddOrSnip(20, customer.getName().getFirstName());
@@ -218,40 +219,10 @@ public class Convert {
 
     public char negativeNumberConverter(int number) {
         char c;
-        switch (number) {
-            case 0:
-                c = ' ';
-                break;
-            case 1:
-                c = '!';
-                break;
-            case 2:
-                c = '"';
-                break;
-            case 3:
-                c = '#';
-                break;
-            case 4:
-                c = '$';
-                break;
-            case 5:
-                c = '%';
-                break;
-            case 6:
-                c = '&';
-                break;
-            case 7:
-                c = '\\';
-                break;
-            case 8:
-                c = '(';
-                break;
-            case 9:
-                c = ')';
-                break;
-            default:
-                c = (char) number;
-                break;
+        if (number >= 0 && number <= 9) {
+            c =  NegativeTokens.values()[number].value;
+        } else {
+            c = (char) number;
         }
         return c;
     }

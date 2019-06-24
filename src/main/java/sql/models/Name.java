@@ -1,6 +1,6 @@
 package sql.models;
 
-import enums.Enums.*;
+import enums.Salutation;
 
 public class Name {
     private Salutation salutation;

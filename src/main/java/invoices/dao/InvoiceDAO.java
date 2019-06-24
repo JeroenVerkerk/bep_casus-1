@@ -1,5 +1,6 @@
 package invoices.dao;
 
+import enums.Vat;
 import invoices.Invoice;
 import invoices.InvoiceLine;
 import com.mongodb.client.model.Filters;
@@ -11,7 +12,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class InvoiceDAO {    private final MongoConnector connection = MongoConnector.getInstance();
+public class InvoiceDAO {
+    private final MongoConnector connection = MongoConnector.getInstance();
     private static InvoiceDAO singleInstance;
 
     public static InvoiceDAO getInstance() {
@@ -53,7 +55,6 @@ public class InvoiceDAO {    private final MongoConnector connection = MongoConn
 
 
     private Invoice fillInvoice(Document document) {
-
         double id = document.getDouble("invoiceId");
         Date date = document.getDate("date");
         String description = document.getString("note");
@@ -67,9 +68,23 @@ public class InvoiceDAO {    private final MongoConnector connection = MongoConn
             double amount = line.getDouble("quantity");
             double totalPrice = line.getDouble("totalPrice");
             String unit = line.getString("unit");
-            String btw = line.getString("btwCode");
 
-            InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, btw);
+            Vat vat;
+            if (line.getString("btwCode").equals("hoog")) {
+                vat = Vat.HIGH;
+            }
+            else if (line.getString("btwCode").equals("laag")) {
+                vat = Vat.HIGH;
+            }
+            else if (line.getString("btwCode").equals("geen")) {
+                vat = Vat.NONE;
+            }
+            else {
+                // exception no valid btw code
+                vat = Vat.NONE;
+            }
+
+            InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, vat);
             invoiceLines.add(invoiceLine);
         }
 
