@@ -21,19 +21,19 @@ class ConvertTest {
     }
 
     @Test
-    void getCompanyInfo() {
+    void getCompanyInfo() throws IOException {
         assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
     }
 
     @Disabled
     @Test
-    void getCustomerInfo() {
+    void getCustomerInfo() throws IOException {
         assertEquals("F", convert.getCustomerInfo(1));
     }
 
     @Disabled
     @Test
-    void getInvoiceInfo() {
+    void getInvoiceInfo() throws IOException {
         assertEquals("F", convert.getInvoiceInfo(4));
     }
 

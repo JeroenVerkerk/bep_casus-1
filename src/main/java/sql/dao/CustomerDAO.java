@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sql.models.*;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ public class CustomerDAO extends BaseDao {
         return singleInstance;
     }
 
-    public Customer selectCustomerInformation(int customerId) {
+    public Customer selectCustomerInformation(int customerId) throws IOException {
 
         List<Customer> customers = new ArrayList<>();
 

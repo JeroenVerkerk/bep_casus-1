@@ -38,7 +38,7 @@ public class Convert {
         return customerIDs;
     }
 
-    public String getCompanyInfo(int klantID) {
+    public String getCompanyInfo(int klantID) throws IOException {
         StringBuilder companyStringBuilder = new StringBuilder();
         Company company = companyDAO.selectCompanyInfomation(klantID);
         companyStringBuilder.append("B");
@@ -71,7 +71,7 @@ public class Convert {
         return companyStringBuilder.toString();
     }
 
-    public String getCustomerInfo(int klantID) {
+    public String getCustomerInfo(int klantID) throws IOException {
         StringBuilder customerStringBuilder = new StringBuilder();
         Customer customer = customerDAO.selectCustomerInformation(klantID);
         customerStringBuilder.append("K");
@@ -117,7 +117,7 @@ public class Convert {
         return customerStringBuilder.toString();
     }
 
-    public String getInvoiceInfo(int maandNummer) {
+    public String getInvoiceInfo(int maandNummer) throws IOException {
         StringBuilder invoiceStringBuilder = new StringBuilder();
         List<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
         for (Invoice invoice : invoices) {
