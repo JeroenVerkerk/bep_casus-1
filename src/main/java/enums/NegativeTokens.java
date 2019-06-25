@@ -1,16 +1,16 @@
 package enums;
 
 public enum NegativeTokens {
-    WhiteSpace(' '),
-    ExclamationMark('!'),
-    DoubleQuote('"'),
-    NumberSign('#'),
-    Dollar('$'),
-    Percent('%'),
-    Ampersand('&'),
-    DoubleBackslash('\\'),
-    LeftParenthesis('('),
-    RightParenthesis(')');
+    WHITESPACE(' '),
+    EXCLAMATIONMARK('!'),
+    DOUBLEQUOTE('"'),
+    NUMBERSIGN('#'),
+    DOLLAR('$'),
+    PERCENT('%'),
+    AMPERSAND('&'),
+    DOUBLEBACKSLASH('\\'),
+    LEFTPARENTHESIS('('),
+    RIGHTPARENTHESIS(')');
 
 
     public final char value;

@@ -1,18 +1,18 @@
 package enums;
 
 public enum Month {
-    January("Januari"),
-    February("Februari"),
-    March("Maart"),
-    April("April"),
-    May("Mei"),
-    June("Juni"),
-    July("Juli"),
-    August("Augustus"),
-    September("September"),
-    October("Oktober"),
-    November("November"),
-    December("December");
+    JANUARY("Januari"),
+    FEBRUARY("Februari"),
+    MARCH("Maart"),
+    APRIL("April"),
+    MAY("Mei"),
+    JUNE("Juni"),
+    JULY("Juli"),
+    AUGUST("Augustus"),
+    SEPTEMBER("September"),
+    OCTOBER("Oktober"),
+    NOVEMBER("November"),
+    DECEMBER("December");
 
     public final String value;
 

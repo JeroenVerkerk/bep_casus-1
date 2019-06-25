@@ -1,4 +1,4 @@
-package mongoReader;
+package monogreader;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
 public final class MongoConnector {
 
 	static Logger logger = LoggerFactory.getLogger(MongoConnector.class);
-	private static MongoConnector single_instance;
+	private static MongoConnector singleInstance;
 	private final MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb+srv://admin:admin@bepcasus-u1lfa.mongodb.net/test?retryWrites=true&w=majority"));
 
 	public static MongoConnector getInstance() {
-		if (single_instance == null) {
-			single_instance = new MongoConnector();
+		if (singleInstance == null) {
+			singleInstance = new MongoConnector();
 		}
-		return single_instance;
+		return singleInstance;
 	}
 
 	public MongoCollection<Document> getCollection () {

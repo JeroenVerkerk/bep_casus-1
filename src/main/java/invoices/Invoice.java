@@ -5,15 +5,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Invoice {
     private double invoiceId;
     private Date date;
     private String description;
-    private ArrayList<InvoiceLine> invoiceLines;
+    private List<InvoiceLine> invoiceLines;
     private double customerId;
 
-    public Invoice(double id, Date date, String description, double customerId, ArrayList<InvoiceLine> invoiceLines) {
+    public Invoice(double id, Date date, String description, double customerId, List<InvoiceLine> invoiceLines) {
         this.invoiceId = id;
         this.date = date;
         this.description = description;
@@ -34,7 +35,7 @@ public class Invoice {
     }
 
     public int getParsedDate() {
-        DateFormat formatter = new SimpleDateFormat("ddMMYY");
+        DateFormat formatter = new SimpleDateFormat("ddMMyy");
         String formattedDate = formatter.format(this.getDate());
         return Integer.parseInt(formattedDate);
 
@@ -58,7 +59,7 @@ public class Invoice {
         this.description = description;
     }
 
-    public ArrayList<InvoiceLine> getInvoiceLines() {
+    public List<InvoiceLine> getInvoiceLines() {
         return this.invoiceLines;
     }
 

@@ -3,12 +3,13 @@ package mongoReader;
 import invoices.Invoice;
 import invoices.dao.InvoiceDAO;
 import com.mongodb.client.MongoCollection;
+import monogreader.MongoConnector;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,7 +32,7 @@ class MongoConnectorTest {
 
     @Test
     void testInvoiceAreFilled() {
-        ArrayList<Invoice> invoices = invoiceDAO.getInvoices();
+        List<Invoice> invoices = invoiceDAO.getInvoices();
         assertTrue(collection.count() == invoices.size());
     }
 
@@ -46,7 +47,7 @@ class MongoConnectorTest {
     @Disabled
     @Test
     void testGetInvoiceInfo() {
-        ArrayList<Invoice> invoices = invoiceDAO.getInvoices();
+        List<Invoice> invoices = invoiceDAO.getInvoices();
         for (Invoice invoice : invoices) {
             System.out.println(invoice.toString());
         }
@@ -57,7 +58,7 @@ class MongoConnectorTest {
     @Test
     void testInvoiceByMonth() {
         int month = 5;
-        ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(month);
+        List<Invoice> invoices = invoiceDAO.getInvoicesByMonth(month);
         for (Invoice invoice : invoices) {
             assertTrue(invoice.getDate().getMonth() == month);
         }
