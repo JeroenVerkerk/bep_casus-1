@@ -1,7 +1,10 @@
 package logic.ief;
 
 import logic.enums.NegativeTokens;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import persistence.people.models.Adress;
 import persistence.people.models.Bank;
 
@@ -24,30 +27,17 @@ class ConvertTest {
         assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
     }
 
-    @Disabled
     @Test
     void getCustomerInfo() throws IOException {
-        assertEquals("F", convert.getCustomerInfo(1));
+        assertEquals("KHelma                                   Mvr   Jan                        Janssen                                 Steenweg                                                    59        3511JNUtrecht             NL001234567B0NL91ABNA0417164300                                              DABAIE2D  \n", convert.getCustomerInfo(1));
     }
 
-    @Disabled
     @Test
     void getInvoiceInfo() throws IOException {
-        assertEquals("F", convert.getInvoiceInfo(4));
+        String test = convert.getInvoiceInfo(4);
+        assertTrue(test.startsWith("BHelma"));
     }
 
-    @Disabled
-    @Test
-    void getInvoiceLines() {
-        //Mock list of invoicelines?
-//        assertEquals("R", convert.getInvoiceLinesFromInvoice());
-    }
-
-
-    @Test
-    void testSplitProductDescription() {
-//        assertEquals("T", convert.splitProductDescription());
-    }
 
     @Test
     void testNegativeLengthConversion() {
@@ -135,7 +125,6 @@ class ConvertTest {
         char test = convert.getDigitForNegativeNumber(-5);
         assertEquals('5', test);
     }
-
 
     @AfterEach
     void tearDown() {
