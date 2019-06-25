@@ -70,9 +70,4 @@ class ReadCLITest {
 
         assertEquals("Null is not a month" + System.getProperty("line.separator"), os.toString());
     }
-
-    @Test
-    void testReader() throws IOException{
-
-    }
 }
