@@ -1,7 +1,7 @@
 package clireader;
 
-import enums.Month;
-import ief.Convert;
+import logic.enums.Month;
+import logic.ief.Convert;
 
 import java.io.BufferedReader;
 import java.io.IOException;
