@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class FileHandler {
 
-    public File generateFile(String contents, String path) throws IOException {
+    public File generateFile(String path) throws IOException {
         File file = new File(path);
         try {
             file.createNewFile();

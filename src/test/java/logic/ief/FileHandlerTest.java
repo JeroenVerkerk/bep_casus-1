@@ -18,7 +18,7 @@ class FileHandlerTest {
 
     @Test
     void testFileGeneration() throws IOException {
-        File file = handler.generateFile("Bla", "./testFile.txt");
+        File file = handler.generateFile("./testFile.txt");
 
         Assertions.assertTrue(file.exists());
     }
@@ -27,7 +27,7 @@ class FileHandlerTest {
     void testIOerror() {
 
         Assertions.assertThrows(IOException.class,
-                () -> handler.generateFile("bla", "fail/bla"));
+                () -> handler.generateFile("fail/bla"));
     }
 
     @AfterEach
