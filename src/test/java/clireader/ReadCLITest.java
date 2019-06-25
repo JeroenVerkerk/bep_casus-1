@@ -17,6 +17,7 @@ class ReadCLITest {
     @BeforeEach
     void setUpStreams() {
         System.setOut(ps);
+        ReadCLI readCLI = new ReadCLI();
     }
 
 
@@ -68,5 +69,10 @@ class ReadCLITest {
         ReadCLI.main(null);
 
         assertEquals("Null is not a month" + System.getProperty("line.separator"), os.toString());
+    }
+
+    @Test
+    void testReader() throws IOException{
+
     }
 }
