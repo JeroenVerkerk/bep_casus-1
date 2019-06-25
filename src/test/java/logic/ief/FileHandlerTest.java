@@ -25,7 +25,6 @@ class FileHandlerTest {
 
     @Test
     void testIOerror() {
-
         Assertions.assertThrows(IOException.class,
                 () -> handler.generateFile("fail/bla"));
     }
