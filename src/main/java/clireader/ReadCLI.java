@@ -39,10 +39,10 @@ public class ReadCLI {
 
     static String returnMonth(int monthNumber) {
         if (monthNumber > 0 && monthNumber < 13) {
-
             // monthNumber minus 1 because the enum index starts at 0
-            System.out.println(Month.values()[monthNumber - 1]);
-            return String.valueOf(Month.values()[monthNumber - 1]);
+            String month = Month.values()[monthNumber - 1].value;
+            System.out.println(month);
+            return month;
         } else {
             System.out.println("Error, " + monthNumber + " is not a valid month");
             return "error";

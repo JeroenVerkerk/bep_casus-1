@@ -1,16 +1,14 @@
 package persistence.invoices.dao;
 
+import com.mongodb.MongoException;
 import com.mongodb.client.model.Filters;
 import logic.enums.Vat;
-import persistence.invoices.connector.MongoConnector;
 import org.bson.Document;
+import persistence.invoices.connector.MongoConnector;
 import persistence.invoices.models.Invoice;
 import persistence.invoices.models.InvoiceLine;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class InvoiceDAO {
     private final MongoConnector connection = MongoConnector.getInstance();
@@ -24,6 +22,26 @@ public class InvoiceDAO {
         return singleInstance;
     }
 
+    public Invoice getInvoiceById(double invoiceId) {
+        Iterator<Document> iterator = connection.getCollection().find(Filters.and(Filters.eq("invoiceId", invoiceId))).limit(1).iterator();
+        return this.fillInvoice(iterator.next());
+    }
+
+    public List<Invoice> getInvoicesByMonth(int month) {
+        ArrayList<Invoice> invoices = new ArrayList<>();
+        Iterator<Invoice> iterator = this.getInvoices().iterator();
+        Calendar cal = Calendar.getInstance();
+
+        while (iterator.hasNext()) {
+            Invoice invoice = iterator.next();
+            cal.setTime(invoice.getDate());
+            if (cal.get(Calendar.MONTH) == month) {
+                invoices.add(invoice);
+            }
+        }
+        return invoices;
+    }
+
     public List<Invoice> getInvoices() {
         Iterator<Document> iterator = connection.getCollection().find().iterator();
         ArrayList<Invoice> invoices = new ArrayList<>();
@@ -35,26 +53,7 @@ public class InvoiceDAO {
         return invoices;
     }
 
-    public Invoice getInvoiceById(double invoiceId) {
-        Iterator<Document> iterator = connection.getCollection().find(Filters.and(Filters.eq("invoiceId", invoiceId))).limit(1).iterator();
-        return this.fillInvoice(iterator.next());
-    }
-
-    public List<Invoice> getInvoicesByMonth(int month) {
-        ArrayList<Invoice> invoices = new ArrayList<>();
-        Iterator<Invoice> iterator = this.getInvoices().iterator();
-
-        while (iterator.hasNext()) {
-            Invoice invoice = iterator.next();
-            if (invoice.getDate().getMonth() == month) {
-                invoices.add(invoice);
-            }
-        }
-        return invoices;
-    }
-
-
-    private Invoice fillInvoice(Document document) {
+    private Invoice fillInvoice(Document document) throws MongoException {
         double id = document.getDouble("invoiceId");
         Date date = document.getDate("date");
         String description = document.getString("note");
@@ -74,14 +73,13 @@ public class InvoiceDAO {
                 vat = Vat.HIGH;
             }
             else if (line.getString(BTWCODE).equals("laag")) {
-                vat = Vat.HIGH;
+                vat = Vat.LOW;
             }
             else if (line.getString(BTWCODE).equals("geen")) {
                 vat = Vat.NONE;
             }
             else {
-                // exception no valid btw code
-                vat = Vat.NONE;
+                throw new MongoException("Invalid VAT code");
             }
 
             InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, vat);

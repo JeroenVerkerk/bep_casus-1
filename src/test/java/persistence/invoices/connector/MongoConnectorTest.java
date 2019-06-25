@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MongoConnectorTest {
-    private static MongoConnector connection;
+    private static MongoConnector connection = MongoConnector.getInstance();
     private static MongoCollection<Document> collection;
 
     @BeforeEach
-    void getConnection() {
-        connection = MongoConnector.getInstance();
+    void getCollection() {
         collection = connection.getCollection();
     }
 
