@@ -63,7 +63,7 @@ public class Invoice {
         return this.invoiceLines;
     }
 
-    public void setInvoiceLines(ArrayList<InvoiceLine> invoiceLines) {
+    public void setInvoiceLines(List<InvoiceLine> invoiceLines) {
         this.invoiceLines = invoiceLines;
     }
 

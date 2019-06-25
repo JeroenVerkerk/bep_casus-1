@@ -16,7 +16,7 @@ public enum Month {
 
     public final String value;
 
-    Month(String Month) {
-        this.value = Month;
+    Month(String month) {
+        this.value = month;
     }
 }

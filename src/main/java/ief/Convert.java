@@ -23,10 +23,9 @@ public class Convert {
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
-        BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"));
-        writer.write(finalString);
-
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"))){
+            writer.write(finalString);
+        }
     }
 
     public List<Integer> getCustomerIDByMonth(int maandNummer) {
