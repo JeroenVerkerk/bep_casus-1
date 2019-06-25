@@ -103,8 +103,8 @@ class ConvertTest {
 
     @Test
     void testIEFFileCreated() throws IOException {
-        convert.combineInfoToIEF(5);
-        File file = new File("./invoice5.txt");
+        convert.combineInfoToIEF(4);
+        File file = new File("./invoice4.txt");
         assertTrue(file.exists());
 
     }
