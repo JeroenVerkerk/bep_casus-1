@@ -24,7 +24,7 @@ public class Convert {
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"))){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"))) {
             writer.write(finalString);
         }
     }
@@ -84,7 +84,6 @@ public class Convert {
         StringBuilder stringBuilder = new StringBuilder();
         Customer customer = customerDAO.selectCustomerInformation(klantID);
         stringBuilder.append("K");
-
 
         String companyName = paddOrSnip(40, customer.getCompany().getCompanyName());
         stringBuilder.append(companyName);
@@ -146,7 +145,7 @@ public class Convert {
                         int number = (int) line.getTotalPrice();
                         char charToConvert = getNDigitForNegativeNumber(number, 1);
                         char convertedChar = negativeNumberConverter(charToConvert);
-                        String convertedDouble = doubleConverter(5,(line.getTotalPrice()/line.getAmount()));
+                        String convertedDouble = doubleConverter(5, (line.getTotalPrice() / line.getAmount()));
                         String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
                         lineStringBuilder.append(finalString);
                     }
@@ -180,7 +179,7 @@ public class Convert {
     }
 
     private char getNDigitForNegativeNumber(int number, int n) {
-        return (""+number).charAt(n);
+        return ("" + number).charAt(n);
     }
 
     private String splitProductDescription(String productDescription) {
