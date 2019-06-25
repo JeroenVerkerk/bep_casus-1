@@ -24,7 +24,7 @@ class ReadCLITest {
     @Test
     void testReturnMonth() {
         String test = ReadCLI.returnMonth(2);
-        assertEquals("FEBRUARY", test);
+        assertEquals("Februari", test);
     }
 
 
@@ -33,7 +33,7 @@ class ReadCLITest {
         String[] args = {"5", ""};
         ReadCLI.main(args);
         assertEquals("Finding data for month 5" + System.getProperty("line.separator") +
-                "MAY" + System.getProperty("line.separator") +
+                "Mei" + System.getProperty("line.separator") +
                 "File created: invoice5.txt" + System.getProperty("line.separator"), os.toString());
     }
 
@@ -42,7 +42,7 @@ class ReadCLITest {
         String[] args = {"5", "6"};
         ReadCLI.main(args);
         assertEquals("Finding data for month 5" + System.getProperty("line.separator") +
-                "MAY" + System.getProperty("line.separator") +
+                "Mei" + System.getProperty("line.separator") +
                 "File created: invoice5.txt" + System.getProperty("line.separator"), os.toString());
     }
 

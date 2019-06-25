@@ -9,7 +9,7 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class MongoConnector {
+public class MongoConnector {
 
 	static Logger logger = LoggerFactory.getLogger(MongoConnector.class);
 	private static MongoConnector singleInstance;

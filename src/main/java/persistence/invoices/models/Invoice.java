@@ -25,10 +25,6 @@ public class Invoice {
         return this.invoiceId;
     }
 
-    public void setInvoiceId(double id) {
-        this.invoiceId = id;
-    }
-
     public Date getDate() {
         return this.date;
     }
@@ -46,47 +42,12 @@ public class Invoice {
         return Integer.parseInt(formattedTime);
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<InvoiceLine> getInvoiceLines() {
         return this.invoiceLines;
     }
 
-    public void setInvoiceLines(List<InvoiceLine> invoiceLines) {
-        this.invoiceLines = invoiceLines;
-    }
-
-
     public double getCustomerId() {
         return this.customerId;
-    }
-
-    public void setCustomerId(double customerId) {
-        this.customerId = customerId;
-    }
-
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-
-        for (InvoiceLine invoiceLine : invoiceLines) {
-            result.append(invoiceLine.toString());
-        }
-
-        return "Factuurnummer: " + getInvoiceId() +
-                "\nDatum: " + getParsedDate() +
-                "\nOmschrijving: " + getInvoiceId() +
-                "\nKlant: " + getCustomerId() +
-                "\nFactuurregels:" + result.toString();
     }
 
 }
