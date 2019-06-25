@@ -25,13 +25,12 @@ public class PostgresConnector {
 
     public Connection getConnection() throws IOException {
         String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/jxcnbknw";
-        String dbConfigPath = "app.properties";
         Properties props = new Properties();
         props.load(new FileInputStream(System.getProperty("user.dir") + "/app.properties"));
         try {
            conn  = DriverManager.getConnection(url, props);
         }catch (SQLException ex) {
-            logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE CONNECTING TO DATABASe XXXXXXXXXXXXXXXXXXXXXXXXXX");
+            logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE CONNECTING TO DATABASE XXXXXXXXXXXXXXXXXXXXXXXXXX");
             logger.info(ex.getMessage(), ex);
         }
 
