@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyDAO extends  BaseDao {
+public class CompanyDAO extends BaseDAO {
     private static final Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
     private static CompanyDAO singleInstance;
 

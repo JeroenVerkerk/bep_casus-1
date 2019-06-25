@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CustomerDAO extends BaseDao {
+public class CustomerDAO extends BaseDAO {
     private static final Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
     private static CustomerDAO singleInstance;
 
