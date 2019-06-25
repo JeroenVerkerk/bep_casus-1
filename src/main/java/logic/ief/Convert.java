@@ -37,13 +37,15 @@ public class Convert {
 
         String companyName = paddOrSnip(60, company.getCompanyName());
         stringBuilder.append(companyName);
-        String adress = getAdress(stringBuilder, company.getAdress());
+        String adress = getAdress(company.getAdress());
         stringBuilder.append(adress);
         String companyVatNumber = paddOrSnip(13, company.getVatNumber());
-        return getBankInfo(stringBuilder, companyVatNumber, company.getBank());
+        stringBuilder.append(getBankInfo(companyVatNumber, company.getBank()));
+        return stringBuilder.toString();
     }
 
-    String getBankInfo(StringBuilder stringBuilder, String vatNumber, Bank bank) {
+    String getBankInfo(String vatNumber, Bank bank) {
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(vatNumber);
 
         String companyIban = paddOrSnip(64, bank.getIban());
@@ -56,8 +58,8 @@ public class Convert {
         return stringBuilder.toString();
     }
 
-    String getAdress(StringBuilder stringBuilder, Adress adress) {
-
+    String getAdress(Adress adress) {
+        StringBuilder stringBuilder = new StringBuilder();
         String streetName = paddOrSnip(60, adress.getStreet());
         stringBuilder.append(streetName);
 
@@ -90,11 +92,12 @@ public class Convert {
 
         String lastName = paddOrSnip(40, customer.getName().getLastName());
         stringBuilder.append(lastName);
-        String adress = getAdress(stringBuilder, customer.getAdress());
+        String adress = getAdress(customer.getAdress());
         stringBuilder.append(adress);
 
         String vatNumber = paddOrSnip(13, customer.getCompany().getVatNumber());
-        return getBankInfo(stringBuilder, vatNumber, customer.getBank());
+        stringBuilder.append(getBankInfo(vatNumber, customer.getBank()));
+        return stringBuilder.toString();
     }
 
     String getInvoiceInfo(int maandNummer) throws IOException {
@@ -115,10 +118,10 @@ public class Convert {
             String invoiceID = String.valueOf(invoice.getInvoiceId());
             invoiceID = paddOrSnip(10, invoiceID);
             invoiceStringBuilder.append(invoiceID);
-            invoiceStringBuilder.append("\n");
 
             List<InvoiceLine> invoiceLines = invoice.getInvoiceLines();
             invoiceStringBuilder.append(getInvoiceLinesFromInvoice(invoiceLines, invoice));
+            invoiceStringBuilder.append("\n");
         }
         return invoiceStringBuilder.toString();
     }
@@ -126,35 +129,36 @@ public class Convert {
     private String getInvoiceLinesFromInvoice(List<InvoiceLine> invoiceLines, Invoice invoice) {
         StringBuilder lineStringBuilder = new StringBuilder();
         for (InvoiceLine line : invoiceLines) {
+            lineStringBuilder.append("\n");
             lineStringBuilder.append("R");
 
             String productName = splitProductDescription(line.getProductName());
             lineStringBuilder.append(productName);
-            lineStringBuilder.append(convertPrice(lineStringBuilder, line));
+            lineStringBuilder.append(convertPrice(line));
 
             int date = invoice.getParsedDate();
             String strDate = paddOrSnip(6, String.valueOf(date));
-            lineStringBuilder.append(Integer.parseInt(strDate)).append(" ");
+            lineStringBuilder.append(Integer.parseInt(strDate));
 
             int time = invoice.getParsedTime();
             String strTime = paddOrSnip(4, String.valueOf(time));
-            lineStringBuilder.append(Integer.parseInt(strTime)).append(" ");
+            lineStringBuilder.append(Integer.parseInt(strTime));
             String unit = paddOrSnip(6, line.getUnit());
             lineStringBuilder.append(unit);
-            lineStringBuilder.append("\n");
         }
         return lineStringBuilder.toString();
     }
 
-    private String convertPrice(StringBuilder stringBuilder, InvoiceLine line) {
+    private String convertPrice(InvoiceLine line) {
+        StringBuilder stringBuilder = new StringBuilder();
         if (line.getAmount() >= 0) {
-            String ammount = doubleConverter(3, line.getAmount());
+            String ammount = padDouble(3, line.getAmount());
             stringBuilder.append(ammount).append(" ");
             try {
                 if (line.getTotalPrice() < 0) {
                     stringBuilder.append(generateNegativePrice(stringBuilder, line));
                 }
-                String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
+                String price = padDouble(5, line.getTotalPrice() / Integer.parseInt(ammount));
                 stringBuilder.append(price).append(" ");
             } catch (ArithmeticException e) {
                 stringBuilder.append("div 0");
@@ -169,9 +173,9 @@ public class Convert {
 
     private String generateNegativePrice(StringBuilder stringBuilder, InvoiceLine line) {
         int number = (int) line.getTotalPrice();
-        char charToConvert = getNDigitForNegativeNumber(number);
+        char charToConvert = getDigitForNegativeNumber(number);
         char convertedChar = negativeNumberConverter(charToConvert);
-        String convertedDouble = doubleConverter(5, (line.getTotalPrice() / line.getAmount()));
+        String convertedDouble = padDouble(5, (line.getTotalPrice() / line.getAmount()));
         String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
         stringBuilder.append(finalString);
 
@@ -186,7 +190,7 @@ public class Convert {
         return stringBuilder.toString();
     }
 
-    private char getNDigitForNegativeNumber(int number) {
+    char getDigitForNegativeNumber(int number) {
         return ("" + number).charAt(1);
     }
 
@@ -199,14 +203,13 @@ public class Convert {
         return paddOrSnip(60, productDescription);
     }
 
-    String doubleConverter(int prefixLength, double getal) {
+    String padDouble(int prefixLength, double getal) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         int getalWithoutDecimal = (int) getal;
         int numberLength = String.valueOf(getalWithoutDecimal).length();
         StringBuilder sb = new StringBuilder();
-        while (numberLength < prefixLength) {
-            numberLength++;
-            sb.append('0');
+        if (numberLength < prefixLength) {
+            sb.append("0".repeat(prefixLength-numberLength));
         }
         String padded = sb.toString() + getalWithoutDecimal;
 

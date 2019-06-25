@@ -21,7 +21,7 @@ class ConvertTest {
 
     @Test
     void getCompanyInfo() throws IOException {
-        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
+        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
     }
 
     @Disabled
@@ -75,7 +75,7 @@ class ConvertTest {
     }
 
     @Test
-    void testConverter() {
+    void testNumberConverter() {
         char zero = convert.negativeNumberConverter(0);
         char one = convert.negativeNumberConverter(1);
         char two = convert.negativeNumberConverter(2);
@@ -111,7 +111,7 @@ class ConvertTest {
     void testGetAdress(){
         StringBuilder stringBuilder = new StringBuilder();
         Adress adress = new Adress("a", "a", "a", "a");
-        String test = convert.getAdress(stringBuilder,adress);
+        String test = convert.getAdress(adress);
         assertEquals("a                                                           a         a     a                   ", test);
 
     }
@@ -120,15 +120,22 @@ class ConvertTest {
     void testGetBankInfo(){
         StringBuilder stringBuilder = new StringBuilder();
         Bank bank = new Bank("a", "a");
-        String test = convert.getBankInfo(stringBuilder, "1234", bank);
+        String test = convert.getBankInfo("1234", bank);
         assertEquals("1234a                                                               a         \n", test);
     }
     @Test
     void doubleConverter() {
-        String test = convert.doubleConverter(5,10.04);
+        String test = convert.padDouble(5,10.04);
 
         assertEquals("0001004", test);
     }
+
+    @Test
+    void testGetDigitForNegativeNumber(){
+        char test = convert.getDigitForNegativeNumber(-5);
+        assertEquals('5', test);
+    }
+
 
     @AfterEach
     void tearDown() {

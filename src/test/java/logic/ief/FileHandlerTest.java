@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 class FileHandlerTest {
     private FileHandler handler;
@@ -16,10 +17,17 @@ class FileHandlerTest {
     }
 
     @Test
-    void testFileGeneration() {
-        File file = handler.generateFile("Bla", "./testFile.txt");
+    void testFileGeneration() throws IOException {
+        File file = handler.generateFile("./testFile.txt");
 
         Assertions.assertTrue(file.exists());
+    }
+
+    @Test
+    void testIOerror() {
+
+        Assertions.assertThrows(IOException.class,
+                () -> handler.generateFile("fail/bla"));
     }
 
     @AfterEach
