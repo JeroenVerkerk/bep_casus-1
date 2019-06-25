@@ -41,7 +41,8 @@ public class Convert {
         stringBuilder.append(adress);
         String companyVatNumber = paddOrSnip(13, company.getVatNumber());
         stringBuilder.append(getBankInfo(companyVatNumber, company.getBank()));
-        return stringBuilder.toString();
+        String companyInfo = stringBuilder.toString();
+        return companyInfo;
     }
 
     String getBankInfo(String vatNumber, Bank bank) {
@@ -176,7 +177,6 @@ public class Convert {
         String convertedDouble = padDouble(5, (line.getTotalPrice() / line.getAmount()));
         String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
         stringBuilder.append(finalString);
-
         return stringBuilder.toString();
     }
 
