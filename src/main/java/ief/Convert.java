@@ -150,20 +150,40 @@ public class Convert {
 
             String productName = splitProductDescription(line.getProductName());
             lineStringBuilder.append(productName);
+            if (line.getAmount() >= 0) {
+                String ammount = doubleConverter(3, line.getAmount());
+                lineStringBuilder.append(ammount).append(" ");
+                try {
+                    if (line.getTotalPrice() < 0) {
+                        int number = (int) line.getTotalPrice();
+                        char charToConvert = getNDigitForNegativeNumber(number, 1);
+                        char convertedChar = negativeNumberConverter(charToConvert);
+                        String convertedDouble = doubleConverter(5,(line.getTotalPrice()/line.getAmount()));
+                        String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
+                        lineStringBuilder.append(finalString);
+                    }
+                    String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
+                    lineStringBuilder.append(price).append(" ");
+                } catch (ArithmeticException e) {
+                    lineStringBuilder.append("div 0");
+                }
 
-            String ammount = doubleConverter(3, line.getAmount());
-            lineStringBuilder.append(ammount);
+            } else {
+                String errorAmmount = paddOrSnip(3, "err");
+                lineStringBuilder.append(errorAmmount).append(" ");
+                String errorPrice = paddOrSnip(5, "error");
+                lineStringBuilder.append(errorPrice).append(" ");
 
-            String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
-            lineStringBuilder.append(price);
+            }
+
 
             int date = invoice.getParsedDate();
             String strDate = paddOrSnip(6, String.valueOf(date));
-            lineStringBuilder.append(Integer.parseInt(strDate));
+            lineStringBuilder.append(Integer.parseInt(strDate)).append(" ");
 
             int time = invoice.getParsedTime();
             String strTime = paddOrSnip(4, String.valueOf(time));
-            lineStringBuilder.append(Integer.parseInt(strTime));
+            lineStringBuilder.append(Integer.parseInt(strTime)).append(" ");
             String unit = paddOrSnip(6, line.getUnit());
             lineStringBuilder.append(unit);
             lineStringBuilder.append("\n");
@@ -171,13 +191,17 @@ public class Convert {
         return lineStringBuilder.toString();
     }
 
+    public char getNDigitForNegativeNumber(int number, int n) {
+        return (""+number).charAt(n);
+    }
+
     public String splitProductDescription(String productDescription) {
         if (productDescription.length() > 60) {
             return "\n" +
                     "T" +
-                    productDescription;
+                    paddOrSnip(120, productDescription);
         }
-        return productDescription;
+        return paddOrSnip(60, productDescription);
     }
 
     public String doubleConverter(int prefixLength, double getal) {
@@ -220,7 +244,7 @@ public class Convert {
     public char negativeNumberConverter(int number) {
         char c;
         if (number >= 0 && number <= 9) {
-            c =  NegativeTokens.values()[number].value;
+            c = NegativeTokens.values()[number].value;
         } else {
             c = (char) number;
         }
