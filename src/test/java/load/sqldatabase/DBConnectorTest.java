@@ -3,6 +3,7 @@ package load.sqldatabase;
 import org.junit.jupiter.api.Test;
 import sql.connector.DBConnector;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ public class DBConnectorTest {
     private DBConnector dbConnector = DBConnector.getInstance();
 
     @Test
-    public void testConnection() throws SQLException {
+    public void testConnection() throws SQLException, IOException {
         Connection connection = dbConnector.getConnection();
         boolean result = false;
 

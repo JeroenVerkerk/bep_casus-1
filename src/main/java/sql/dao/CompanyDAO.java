@@ -6,6 +6,7 @@ import sql.models.Adress;
 import sql.models.Bank;
 import sql.models.Company;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ public class CompanyDAO extends  BaseDao {
         return singleInstance;
     }
 
-    public Company selectCompanyInfomation(int customerId) {
+    public Company selectCompanyInfomation(int customerId) throws IOException {
         List<Company> companies = new ArrayList<>();
 
         try (Connection connection  = super.getConnection();

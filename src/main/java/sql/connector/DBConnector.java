@@ -1,9 +1,14 @@
 package sql.connector;
 
-import java.sql.*;
-import java.util.Properties;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnector {
     private Connection conn;
@@ -18,12 +23,11 @@ public class DBConnector {
         return sinlgeInstance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws IOException {
         String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/jxcnbknw";
-
+        String dbConfigPath = "app.properties";
         Properties props = new Properties();
-        props.setProperty("user", "jxcnbknw");
-        props.setProperty("password", "o8Ndi3bK7w3AHQFNc8qOOUlR3lOPuwlX");
+        props.load(new FileInputStream(System.getProperty("user.dir") + "/app.properties"));
         try {
            conn  = DriverManager.getConnection(url, props);
         }catch (SQLException ex) {

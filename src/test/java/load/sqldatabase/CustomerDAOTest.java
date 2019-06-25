@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sql.dao.CustomerDAO;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -20,52 +22,52 @@ public class CustomerDAOTest {
     }
 
     @Test
-    public void TestCustomerName() {
+    public void TestCustomerName() throws IOException {
         assertEquals("Jan", customerDAO.selectCustomerInformation(1).getName().getFirstName());
     }
 
     @Test
-    public void TestCustomerMiddleName() {
+    public void TestCustomerMiddleName() throws IOException {
         assertEquals(null, customerDAO.selectCustomerInformation(1).getName().getMiddleName());
     }
 
     @Test
-    public void TestCustomerLastName() {
+    public void TestCustomerLastName() throws IOException {
         assertEquals("Janssen", customerDAO.selectCustomerInformation(1).getName().getLastName());
     }
 
     @Test
-    public void TestCustomerSalutation() {
+    public void TestCustomerSalutation() throws IOException {
         assertEquals(Salutation.DHR, customerDAO.selectCustomerInformation(2).getName().getSalutation());
     }
 
     @Test
-    public void TestCustomerIsCompany() {
+    public void TestCustomerIsCompany() throws IOException {
         assertEquals("Helma", customerDAO.selectCustomerInformation(1).getCompany().getCompanyName());
     }
 
     @Test
-    public void TestCustomerIsNotACompany() {
+    public void TestCustomerIsNotACompany() throws IOException {
         assertEquals(null, customerDAO.selectCustomerInformation(4).getCompany());
     }
 
     @Test
-    public void TestCustomerWithGiro() {
+    public void TestCustomerWithGiro() throws IOException {
         assertEquals("giro882", customerDAO.selectCustomerInformation(5).getBank().getIban());
     }
 
     @Test
-    public void TestCustomerOldAdressMOATA() {
+    public void TestCustomerOldAdressMOATA() throws IOException {
         assertEquals("Rotterdam", customerDAO.selectCustomerInformation(2).getAdress().getCity());
     }
 
     @Test
-    public void TestCustomerOldAdressKDLRA() {
+    public void TestCustomerOldAdressKDLRA() throws IOException {
         assertEquals("Zevenhuizen", customerDAO.selectCustomerInformation(3).getAdress().getCity());
     }
 
     @Test
-    public void TestCustomerOldAdressNIPJK() {
+    public void TestCustomerOldAdressNIPJK() throws IOException {
         assertEquals("Den Haag", customerDAO.selectCustomerInformation(5).getAdress().getCity());
     }
 }

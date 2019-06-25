@@ -6,6 +6,8 @@ import invoices.InvoiceLine;
 import invoices.dao.InvoiceDAO;
 import sql.dao.CompanyDAO;
 import sql.dao.CustomerDAO;
+import sql.models.Adress;
+import sql.models.Bank;
 import sql.models.Company;
 import sql.models.Customer;
 
@@ -13,7 +15,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Convert {
@@ -23,101 +24,80 @@ public class Convert {
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"))){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"))) {
             writer.write(finalString);
         }
     }
 
-    public List<Integer> getCustomerIDByMonth(int maandNummer) {
-        List<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
-        ArrayList<Integer> customerIDs = new ArrayList<>();
-        for (Invoice invoice : invoices) {
-            int id = (int) invoice.getCustomerId();
-            customerIDs.add(id);
-        }
-        return customerIDs;
-    }
 
-    public String getCompanyInfo(int klantID) {
-        StringBuilder companyStringBuilder = new StringBuilder();
+    String getCompanyInfo(int klantID) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
         Company company = companyDAO.selectCompanyInfomation(klantID);
-        companyStringBuilder.append("B");
+        stringBuilder.append("B");
 
         String companyName = paddOrSnip(60, company.getCompanyName());
-        companyStringBuilder.append(companyName);
-
-        String companyStreetName = paddOrSnip(60, company.getAdress().getStreet());
-        companyStringBuilder.append(companyStreetName);
-
-        String companyHouseNumber = paddOrSnip(10, company.getAdress().getHouseNumber());
-        companyStringBuilder.append(companyHouseNumber);
-
-        String companyPostalCode = paddOrSnip(6, company.getAdress().getPostalcode());
-        companyStringBuilder.append(companyPostalCode);
-
-        String companyCity = paddOrSnip(20, company.getAdress().getCity());
-        companyStringBuilder.append(companyCity);
-
+        stringBuilder.append(companyName);
+        String adress = getAdress(stringBuilder, company.getAdress());
+        stringBuilder.append(adress);
         String companyVatNumber = paddOrSnip(13, company.getVatNumber());
-        companyStringBuilder.append(companyVatNumber);
-
-        String companyIban = paddOrSnip(64, company.getBank().getIban());
-        companyStringBuilder.append(companyIban);
-
-        String companyBic = paddOrSnip(10, company.getBank().getBic());
-        companyStringBuilder.append(companyBic);
-
-        companyStringBuilder.append("\n");
-        return companyStringBuilder.toString();
+        return getBankInfo(stringBuilder, companyVatNumber, company.getBank());
     }
 
-    public String getCustomerInfo(int klantID) {
-        StringBuilder customerStringBuilder = new StringBuilder();
-        Customer customer = customerDAO.selectCustomerInformation(klantID);
-        customerStringBuilder.append("K");
+    String getBankInfo(StringBuilder stringBuilder, String vatNumber, Bank bank) {
+        stringBuilder.append(vatNumber);
 
+        String companyIban = paddOrSnip(64, bank.getIban());
+        stringBuilder.append(companyIban);
+
+        String companyBic = paddOrSnip(10, bank.getBic());
+        stringBuilder.append(companyBic);
+
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
+    }
+
+    String getAdress(StringBuilder stringBuilder, Adress adress) {
+
+        String streetName = paddOrSnip(60, adress.getStreet());
+        stringBuilder.append(streetName);
+
+        String houseNumber = paddOrSnip(10, adress.getHouseNumber());
+        stringBuilder.append(houseNumber);
+
+        String postalCode = paddOrSnip(6, adress.getPostalcode());
+        stringBuilder.append(postalCode);
+
+        String city = paddOrSnip(20, adress.getCity());
+        stringBuilder.append(city);
+        return stringBuilder.toString();
+    }
+
+    String getCustomerInfo(int klantID) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        Customer customer = customerDAO.selectCustomerInformation(klantID);
+        stringBuilder.append("K");
 
         String companyName = paddOrSnip(40, customer.getCompany().getCompanyName());
-        customerStringBuilder.append(companyName);
-
+        stringBuilder.append(companyName);
         String salutation = paddOrSnip(6, customer.getName().getSalutation().value);
-        customerStringBuilder.append(salutation);
+        stringBuilder.append(salutation);
 
         String firstName = paddOrSnip(20, customer.getName().getFirstName());
-        customerStringBuilder.append(firstName);
+        stringBuilder.append(firstName);
 
         String middleName = paddOrSnip(7, customer.getName().getMiddleName());
-        customerStringBuilder.append(middleName);
+        stringBuilder.append(middleName);
 
         String lastName = paddOrSnip(40, customer.getName().getLastName());
-        customerStringBuilder.append(lastName);
-
-        String streetName = paddOrSnip(60, customer.getAdress().getStreet());
-        customerStringBuilder.append(streetName);
-
-        String houseNumber = paddOrSnip(10, customer.getAdress().getHouseNumber());
-        customerStringBuilder.append(houseNumber);
-
-        String postalCode = paddOrSnip(6, customer.getAdress().getPostalcode());
-        customerStringBuilder.append(postalCode);
-
-        String cityName = paddOrSnip(20, customer.getAdress().getCity());
-        customerStringBuilder.append(cityName);
+        stringBuilder.append(lastName);
+        String adress = getAdress(stringBuilder, customer.getAdress());
+        stringBuilder.append(adress);
 
         String vatNumber = paddOrSnip(13, customer.getCompany().getVatNumber());
-        customerStringBuilder.append(vatNumber);
-
-        String iban = paddOrSnip(64, customer.getBank().getIban());
-        customerStringBuilder.append(iban);
-
-        String bic = paddOrSnip(10, customer.getBank().getBic());
-        customerStringBuilder.append(bic);
-
-        customerStringBuilder.append("\n");
-        return customerStringBuilder.toString();
+        return getBankInfo(stringBuilder, vatNumber, customer.getBank());
     }
 
-    public String getInvoiceInfo(int maandNummer) {
+    String getInvoiceInfo(int maandNummer) throws IOException {
         StringBuilder invoiceStringBuilder = new StringBuilder();
         List<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
         for (Invoice invoice : invoices) {
@@ -143,39 +123,14 @@ public class Convert {
         return invoiceStringBuilder.toString();
     }
 
-    public String getInvoiceLinesFromInvoice(List<InvoiceLine> invoiceLines, Invoice invoice) {
+    private String getInvoiceLinesFromInvoice(List<InvoiceLine> invoiceLines, Invoice invoice) {
         StringBuilder lineStringBuilder = new StringBuilder();
         for (InvoiceLine line : invoiceLines) {
             lineStringBuilder.append("R");
 
             String productName = splitProductDescription(line.getProductName());
             lineStringBuilder.append(productName);
-            if (line.getAmount() >= 0) {
-                String ammount = doubleConverter(3, line.getAmount());
-                lineStringBuilder.append(ammount).append(" ");
-                try {
-                    if (line.getTotalPrice() < 0) {
-                        int number = (int) line.getTotalPrice();
-                        char charToConvert = getNDigitForNegativeNumber(number, 1);
-                        char convertedChar = negativeNumberConverter(charToConvert);
-                        String convertedDouble = doubleConverter(5,(line.getTotalPrice()/line.getAmount()));
-                        String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
-                        lineStringBuilder.append(finalString);
-                    }
-                    String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
-                    lineStringBuilder.append(price).append(" ");
-                } catch (ArithmeticException e) {
-                    lineStringBuilder.append("div 0");
-                }
-
-            } else {
-                String errorAmmount = paddOrSnip(3, "err");
-                lineStringBuilder.append(errorAmmount).append(" ");
-                String errorPrice = paddOrSnip(5, "error");
-                lineStringBuilder.append(errorPrice).append(" ");
-
-            }
-
+            lineStringBuilder.append(convertPrice(lineStringBuilder, line));
 
             int date = invoice.getParsedDate();
             String strDate = paddOrSnip(6, String.valueOf(date));
@@ -191,11 +146,51 @@ public class Convert {
         return lineStringBuilder.toString();
     }
 
-    public char getNDigitForNegativeNumber(int number, int n) {
-        return (""+number).charAt(n);
+    private String convertPrice(StringBuilder stringBuilder, InvoiceLine line) {
+        if (line.getAmount() >= 0) {
+            String ammount = doubleConverter(3, line.getAmount());
+            stringBuilder.append(ammount).append(" ");
+            try {
+                if (line.getTotalPrice() < 0) {
+                    stringBuilder.append(generateNegativePrice(stringBuilder, line));
+                }
+                String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
+                stringBuilder.append(price).append(" ");
+            } catch (ArithmeticException e) {
+                stringBuilder.append("div 0");
+            }
+        } else {
+            stringBuilder.append(generateErrorForPrice(stringBuilder));
+
+        }
+        return stringBuilder.toString();
+
     }
 
-    public String splitProductDescription(String productDescription) {
+    private String generateNegativePrice(StringBuilder stringBuilder, InvoiceLine line) {
+        int number = (int) line.getTotalPrice();
+        char charToConvert = getNDigitForNegativeNumber(number);
+        char convertedChar = negativeNumberConverter(charToConvert);
+        String convertedDouble = doubleConverter(5, (line.getTotalPrice() / line.getAmount()));
+        String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
+        stringBuilder.append(finalString);
+
+        return stringBuilder.toString();
+    }
+
+    private String generateErrorForPrice(StringBuilder stringBuilder) {
+        String errorAmmount = paddOrSnip(3, "err");
+        stringBuilder.append(errorAmmount).append(" ");
+        String errorPrice = paddOrSnip(5, "error");
+        stringBuilder.append(errorPrice).append(" ");
+        return stringBuilder.toString();
+    }
+
+    private char getNDigitForNegativeNumber(int number) {
+        return ("" + number).charAt(1);
+    }
+
+    private String splitProductDescription(String productDescription) {
         if (productDescription.length() > 60) {
             return "\n" +
                     "T" +
@@ -204,9 +199,8 @@ public class Convert {
         return paddOrSnip(60, productDescription);
     }
 
-    public String doubleConverter(int prefixLength, double getal) {
+    String doubleConverter(int prefixLength, double getal) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        //Double (5,2): 10,04 = 0001004 (dus zonder comma, met voorloop nullen)
         int getalWithoutDecimal = (int) getal;
         int numberLength = String.valueOf(getalWithoutDecimal).length();
         StringBuilder sb = new StringBuilder();
@@ -223,8 +217,8 @@ public class Convert {
         return padded + substring;
     }
 
-    public String paddOrSnip(int maxLength, String content) {
-        if (content == null) {
+    String paddOrSnip(int maxLength, String content) {
+        if (content == null || content.equals("")) {
             return " ".repeat(Math.max(0, maxLength));
         }
         int actualLength = content.length();
@@ -241,7 +235,7 @@ public class Convert {
         return content;
     }
 
-    public char negativeNumberConverter(int number) {
+    char negativeNumberConverter(int number) {
         char c;
         if (number >= 0 && number <= 9) {
             c = NegativeTokens.values()[number].value;

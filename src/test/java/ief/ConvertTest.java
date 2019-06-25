@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import sql.models.Adress;
+import sql.models.Bank;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,19 +23,19 @@ class ConvertTest {
     }
 
     @Test
-    void getCompanyInfo() {
-        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
+    void getCompanyInfo() throws IOException {
+        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
     }
 
     @Disabled
     @Test
-    void getCustomerInfo() {
+    void getCustomerInfo() throws IOException {
         assertEquals("F", convert.getCustomerInfo(1));
     }
 
     @Disabled
     @Test
-    void getInvoiceInfo() {
+    void getInvoiceInfo() throws IOException {
         assertEquals("F", convert.getInvoiceInfo(4));
     }
 
@@ -103,12 +105,27 @@ class ConvertTest {
 
     @Test
     void testIEFFileCreated() throws IOException {
-        convert.combineInfoToIEF(5);
-        File file = new File("./invoice5.txt");
+        convert.combineInfoToIEF(4);
+        File file = new File("./invoice4.txt");
         assertTrue(file.exists());
 
     }
+    @Test
+    void testGetAdress(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Adress adress = new Adress("a", "a", "a", "a");
+        String test = convert.getAdress(stringBuilder,adress);
+        assertEquals("a                                                           a         a     a                   ", test);
 
+    }
+
+    @Test
+    void testGetBankInfo(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Bank bank = new Bank("a", "a");
+        String test = convert.getBankInfo(stringBuilder, "1234", bank);
+        assertEquals("1234a                                                               a         \n", test);
+    }
     @Test
     void doubleConverter() {
         String test = convert.doubleConverter(5,10.04);
