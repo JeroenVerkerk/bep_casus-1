@@ -152,18 +152,17 @@ public class Convert {
             lineStringBuilder.append(productName);
 
             String ammount = doubleConverter(3, line.getAmount());
-            lineStringBuilder.append(ammount);
+            lineStringBuilder.append(ammount).append(" ");
 
             String price = doubleConverter(5, line.getTotalPrice() / Integer.parseInt(ammount));
-            lineStringBuilder.append(price);
-
+            lineStringBuilder.append(price).append(" ");
             int date = invoice.getParsedDate();
             String strDate = paddOrSnip(6, String.valueOf(date));
-            lineStringBuilder.append(Integer.parseInt(strDate));
+            lineStringBuilder.append(Integer.parseInt(strDate)).append(" ");
 
             int time = invoice.getParsedTime();
             String strTime = paddOrSnip(4, String.valueOf(time));
-            lineStringBuilder.append(Integer.parseInt(strTime));
+            lineStringBuilder.append(Integer.parseInt(strTime)).append(" ");
             String unit = paddOrSnip(6, line.getUnit());
             lineStringBuilder.append(unit);
             lineStringBuilder.append("\n");
@@ -175,9 +174,9 @@ public class Convert {
         if (productDescription.length() > 60) {
             return "\n" +
                     "T" +
-                    productDescription;
+                    paddOrSnip(120, productDescription);
         }
-        return productDescription;
+        return paddOrSnip(60, productDescription);
     }
 
     public String doubleConverter(int prefixLength, double getal) {
