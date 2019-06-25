@@ -1,7 +1,7 @@
 package persistence.invoices.dao;
 
 import com.mongodb.client.MongoCollection;
-import invoices.connector.MongoConnector;
+import persistence.invoices.connector.MongoConnector;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

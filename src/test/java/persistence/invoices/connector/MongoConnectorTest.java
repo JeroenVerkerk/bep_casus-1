@@ -1,7 +1,6 @@
 package persistence.invoices.connector;
 
 import com.mongodb.client.MongoCollection;
-import invoices.connector.MongoConnector;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
