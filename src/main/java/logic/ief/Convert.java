@@ -41,7 +41,8 @@ public class Convert {
         stringBuilder.append(adress);
         String companyVatNumber = paddOrSnip(13, company.getVatNumber());
         stringBuilder.append(getBankInfo(companyVatNumber, company.getBank()));
-        return stringBuilder.toString();
+        String companyInfo = stringBuilder.toString();
+        return companyInfo;
     }
 
     String getBankInfo(String vatNumber, Bank bank) {
@@ -55,7 +56,8 @@ public class Convert {
         stringBuilder.append(companyBic);
 
         stringBuilder.append("\n");
-        return stringBuilder.toString();
+        String bankInfo = stringBuilder.toString();
+        return bankInfo;
     }
 
     String getAdress(Adress adress) {
@@ -71,7 +73,8 @@ public class Convert {
 
         String city = paddOrSnip(20, adress.getCity());
         stringBuilder.append(city);
-        return stringBuilder.toString();
+        String adressString = stringBuilder.toString();
+        return adressString;
     }
 
     String getCustomerInfo(int klantID) throws IOException {
@@ -97,7 +100,8 @@ public class Convert {
 
         String vatNumber = paddOrSnip(13, customer.getCompany().getVatNumber());
         stringBuilder.append(getBankInfo(vatNumber, customer.getBank()));
-        return stringBuilder.toString();
+        String customerInfo = stringBuilder.toString();
+        return customerInfo;
     }
 
     String getInvoiceInfo(int maandNummer) throws IOException {
@@ -123,7 +127,8 @@ public class Convert {
             invoiceStringBuilder.append(getInvoiceLinesFromInvoice(invoiceLines, invoice));
             invoiceStringBuilder.append("\n");
         }
-        return invoiceStringBuilder.toString();
+        String invoiceInfo = invoiceStringBuilder.toString();
+        return invoiceInfo;
     }
 
     private String getInvoiceLinesFromInvoice(List<InvoiceLine> invoiceLines, Invoice invoice) {
@@ -146,7 +151,8 @@ public class Convert {
             String unit = paddOrSnip(6, line.getUnit());
             lineStringBuilder.append(unit);
         }
-        return lineStringBuilder.toString();
+        String invoiceLinesString = lineStringBuilder.toString();
+        return invoiceLinesString;
     }
 
     String convertPrice(InvoiceLine line) {
@@ -165,7 +171,8 @@ public class Convert {
             stringBuilder.append(generateErrorForPrice(stringBuilder));
 
         }
-        return stringBuilder.toString();
+        String price = stringBuilder.toString();
+        return price;
 
     }
 
@@ -176,8 +183,8 @@ public class Convert {
         String convertedDouble = padDouble(5, (line.getTotalPrice() / line.getAmount()));
         String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
         stringBuilder.append(finalString);
-
-        return stringBuilder.toString();
+        String negPrice = stringBuilder.toString();
+        return negPrice;
     }
 
     private String generateErrorForPrice(StringBuilder stringBuilder) {
@@ -185,7 +192,8 @@ public class Convert {
         stringBuilder.append(errorAmmount).append(" ");
         String errorPrice = paddOrSnip(5, "error");
         stringBuilder.append(errorPrice).append(" ");
-        return stringBuilder.toString();
+        String errorFinalPrice = stringBuilder.toString();
+        return errorFinalPrice;
     }
 
     char getDigitForNegativeNumber(int number) {

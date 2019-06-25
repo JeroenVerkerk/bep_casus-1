@@ -1,12 +1,13 @@
 package logic.ief;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FileHandlerTest {
     private FileHandler handler;
@@ -20,12 +21,12 @@ class FileHandlerTest {
     void testFileGeneration() throws IOException {
         File file = handler.generateFile("./testFile.txt");
 
-        Assertions.assertTrue(file.exists());
+        assertTrue(file.exists());
     }
 
     @Test
     void testIOerror() {
-        Assertions.assertThrows(IOException.class,
+        assertThrows(IOException.class,
                 () -> handler.generateFile("fail/bla"));
     }
 
