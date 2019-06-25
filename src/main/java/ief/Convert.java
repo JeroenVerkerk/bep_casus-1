@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Convert {
     private InvoiceDAO invoiceDAO = InvoiceDAO.getInstance();
@@ -22,14 +23,13 @@ public class Convert {
 
     public void combineInfoToIEF(int maandNummer) throws IOException {
         String finalString = getInvoiceInfo(maandNummer);
-        BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"));
-        writer.write(finalString);
-
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("invoice" + maandNummer + ".txt"))){
+            writer.write(finalString);
+        }
     }
 
-    public ArrayList<Integer> getCustomerIDByMonth(int maandNummer) {
-        ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
+    public List<Integer> getCustomerIDByMonth(int maandNummer) {
+        List<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
         ArrayList<Integer> customerIDs = new ArrayList<>();
         for (Invoice invoice : invoices) {
             int id = (int) invoice.getCustomerId();
@@ -38,7 +38,7 @@ public class Convert {
         return customerIDs;
     }
 
-    public String getCompanyInfo(int klantID, String addressType) {
+    public String getCompanyInfo(int klantID) {
         StringBuilder companyStringBuilder = new StringBuilder();
         Company company = companyDAO.selectCompanyInfomation(klantID);
         companyStringBuilder.append("B");
@@ -71,7 +71,7 @@ public class Convert {
         return companyStringBuilder.toString();
     }
 
-    public String getCustomerInfo(int klantID, String addressType) {
+    public String getCustomerInfo(int klantID) {
         StringBuilder customerStringBuilder = new StringBuilder();
         Customer customer = customerDAO.selectCustomerInformation(klantID);
         customerStringBuilder.append("K");
@@ -119,12 +119,12 @@ public class Convert {
 
     public String getInvoiceInfo(int maandNummer) {
         StringBuilder invoiceStringBuilder = new StringBuilder();
-        ArrayList<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
+        List<Invoice> invoices = invoiceDAO.getInvoicesByMonth(maandNummer);
         for (Invoice invoice : invoices) {
-            double ID = invoice.getCustomerId();
-            int intID = (int) ID;
-            invoiceStringBuilder.append(getCompanyInfo(intID, "F"));
-            invoiceStringBuilder.append(getCustomerInfo(intID, "F"));
+            double id = invoice.getCustomerId();
+            int intID = (int) id;
+            invoiceStringBuilder.append(getCompanyInfo(intID));
+            invoiceStringBuilder.append(getCustomerInfo(intID));
             invoiceStringBuilder.append("F");
 
             int date = invoice.getParsedDate();
@@ -137,13 +137,13 @@ public class Convert {
             invoiceStringBuilder.append(invoiceID);
             invoiceStringBuilder.append("\n");
 
-            ArrayList<InvoiceLine> invoiceLines = invoice.getInvoiceLines();
+            List<InvoiceLine> invoiceLines = invoice.getInvoiceLines();
             invoiceStringBuilder.append(getInvoiceLinesFromInvoice(invoiceLines, invoice));
         }
         return invoiceStringBuilder.toString();
     }
 
-    public String getInvoiceLinesFromInvoice(ArrayList<InvoiceLine> invoiceLines, Invoice invoice) {
+    public String getInvoiceLinesFromInvoice(List<InvoiceLine> invoiceLines, Invoice invoice) {
         StringBuilder lineStringBuilder = new StringBuilder();
         for (InvoiceLine line : invoiceLines) {
             lineStringBuilder.append("R");

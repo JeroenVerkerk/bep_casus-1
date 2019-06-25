@@ -14,8 +14,7 @@ public class FileHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            PrintWriter out = new PrintWriter(path);
+        try (PrintWriter out = new PrintWriter(path)){
             out.println(contents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

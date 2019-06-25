@@ -4,7 +4,7 @@ import enums.Vat;
 import invoices.Invoice;
 import invoices.InvoiceLine;
 import com.mongodb.client.model.Filters;
-import mongoReader.MongoConnector;
+import monogreader.MongoConnector;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.List;
 public class InvoiceDAO {
     private final MongoConnector connection = MongoConnector.getInstance();
     private static InvoiceDAO singleInstance;
+    private static final String BTWCODE = "btwCode";
 
     public static InvoiceDAO getInstance() {
         if (singleInstance == null) {
@@ -23,7 +24,7 @@ public class InvoiceDAO {
         return singleInstance;
     }
 
-    public ArrayList<Invoice> getInvoices() {
+    public List<Invoice> getInvoices() {
         Iterator<Document> iterator = connection.getCollection().find().iterator();
         ArrayList<Invoice> invoices = new ArrayList<>();
 
@@ -36,11 +37,10 @@ public class InvoiceDAO {
 
     public Invoice getInvoiceById(double invoiceId) {
         Iterator<Document> iterator = connection.getCollection().find(Filters.and(Filters.eq("invoiceId", invoiceId))).limit(1).iterator();
-        Invoice newInvoice = this.fillInvoice(iterator.next());
-        return newInvoice;
+        return this.fillInvoice(iterator.next());
     }
 
-    public ArrayList<Invoice> getInvoicesByMonth(int month) {
+    public List<Invoice> getInvoicesByMonth(int month) {
         ArrayList<Invoice> invoices = new ArrayList<>();
         Iterator<Invoice> iterator = this.getInvoices().iterator();
 
@@ -70,13 +70,13 @@ public class InvoiceDAO {
             String unit = line.getString("unit");
 
             Vat vat;
-            if (line.getString("btwCode").equals("hoog")) {
+            if (line.getString(BTWCODE).equals("hoog")) {
                 vat = Vat.HIGH;
             }
-            else if (line.getString("btwCode").equals("laag")) {
+            else if (line.getString(BTWCODE).equals("laag")) {
                 vat = Vat.HIGH;
             }
-            else if (line.getString("btwCode").equals("geen")) {
+            else if (line.getString(BTWCODE).equals("geen")) {
                 vat = Vat.NONE;
             }
             else {
@@ -88,7 +88,6 @@ public class InvoiceDAO {
             invoiceLines.add(invoiceLine);
         }
 
-        Invoice invoice = new Invoice(id, date, description, customerId, invoiceLines);
-        return invoice;
+        return new Invoice(id, date, description, customerId, invoiceLines);
     }
 }

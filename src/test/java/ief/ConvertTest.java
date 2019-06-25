@@ -22,13 +22,13 @@ class ConvertTest {
 
     @Test
     void getCompanyInfo() {
-        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2, "F"));
+        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
     }
 
     @Disabled
     @Test
     void getCustomerInfo() {
-        assertEquals("F", convert.getCustomerInfo(1, "F"));
+        assertEquals("F", convert.getCustomerInfo(1));
     }
 
     @Disabled
@@ -88,16 +88,16 @@ class ConvertTest {
         char eight = convert.negativeNumberConverter(8);
         char nine = convert.negativeNumberConverter(9);
         char def = convert.negativeNumberConverter('a');
-        assertEquals(NegativeTokens.WhiteSpace.value, zero);
-        assertEquals(NegativeTokens.ExclamationMark.value, one);
-        assertEquals(NegativeTokens.DoubleQuote.value, two);
-        assertEquals(NegativeTokens.NumberSign.value, three);
-        assertEquals(NegativeTokens.Dollar.value, four);
-        assertEquals(NegativeTokens.Percent.value, five);
-        assertEquals(NegativeTokens.Ampersand.value, six);
-        assertEquals(NegativeTokens.DoubleBackslash.value, seven);
-        assertEquals(NegativeTokens.LeftParenthesis.value, eight);
-        assertEquals(NegativeTokens.RightParenthesis.value, nine);
+        assertEquals(NegativeTokens.WHITESPACE.value, zero);
+        assertEquals(NegativeTokens.EXCLAMATIONMARK.value, one);
+        assertEquals(NegativeTokens.DOUBLEQUOTE.value, two);
+        assertEquals(NegativeTokens.NUMBERSIGN.value, three);
+        assertEquals(NegativeTokens.DOLLAR.value, four);
+        assertEquals(NegativeTokens.PERCENT.value, five);
+        assertEquals(NegativeTokens.AMPERSAND.value, six);
+        assertEquals(NegativeTokens.DOUBLEBACKSLASH.value, seven);
+        assertEquals(NegativeTokens.LEFTPARENTHESIS.value, eight);
+        assertEquals(NegativeTokens.RIGHTPARENTHESIS.value, nine);
         assertEquals('a', def);
     }
 
