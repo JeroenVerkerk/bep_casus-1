@@ -175,7 +175,7 @@ public class Convert {
         String finalString = convertedDouble.replaceFirst(String.valueOf(charToConvert), String.valueOf(convertedChar));
         stringBuilder.append(finalString);
 
-        return stringBuilder.toString()
+        return stringBuilder.toString();
     }
 
     private String generateErrorForPrice(StringBuilder stringBuilder) {
@@ -183,7 +183,7 @@ public class Convert {
         stringBuilder.append(errorAmmount).append(" ");
         String errorPrice = paddOrSnip(5, "error");
         stringBuilder.append(errorPrice).append(" ");
-        return stringBuilder.toString()
+        return stringBuilder.toString();
     }
 
     private char getNDigitForNegativeNumber(int number) {
