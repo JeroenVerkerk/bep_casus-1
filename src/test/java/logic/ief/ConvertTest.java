@@ -1,7 +1,10 @@
 package logic.ief;
 
 import logic.enums.NegativeTokens;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import persistence.people.models.Adress;
 import persistence.people.models.Bank;
 
@@ -122,7 +125,6 @@ class ConvertTest {
         char test = convert.getDigitForNegativeNumber(-5);
         assertEquals('5', test);
     }
-
 
     @AfterEach
     void tearDown() {

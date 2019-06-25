@@ -149,20 +149,18 @@ public class Convert {
         return lineStringBuilder.toString();
     }
 
-    private String convertPrice(InvoiceLine line) {
+    String convertPrice(InvoiceLine line) {
         StringBuilder stringBuilder = new StringBuilder();
         if (line.getAmount() >= 0) {
             String ammount = padDouble(3, line.getAmount());
             stringBuilder.append(ammount).append(" ");
-            try {
-                if (line.getTotalPrice() < 0) {
-                    stringBuilder.append(generateNegativePrice(stringBuilder, line));
-                }
-                String price = padDouble(5, line.getTotalPrice() / Integer.parseInt(ammount));
-                stringBuilder.append(price).append(" ");
-            } catch (ArithmeticException e) {
-                stringBuilder.append("div 0");
+
+            if (line.getTotalPrice() < 0) {
+                stringBuilder.append(generateNegativePrice(stringBuilder, line));
             }
+            String price = padDouble(5, line.getTotalPrice() / Integer.parseInt(ammount));
+            stringBuilder.append(price).append(" ");
+
         } else {
             stringBuilder.append(generateErrorForPrice(stringBuilder));
 
@@ -209,7 +207,7 @@ public class Convert {
         int numberLength = String.valueOf(getalWithoutDecimal).length();
         StringBuilder sb = new StringBuilder();
         if (numberLength < prefixLength) {
-            sb.append("0".repeat(prefixLength-numberLength));
+            sb.append("0".repeat(prefixLength - numberLength));
         }
         String padded = sb.toString() + getalWithoutDecimal;
 
