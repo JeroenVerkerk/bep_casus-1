@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import sql.models.Adress;
+import sql.models.Bank;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +24,7 @@ class ConvertTest {
 
     @Test
     void getCompanyInfo() throws IOException {
-        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
+        assertEquals("BEricson                                                     Ajax                                                        5         1901CDRotterdam           BEricson                                                     Ajax                                                        5         1901CDRotterdam           NL00123123120                                                                DABAIE2D  \n", convert.getCompanyInfo(2));
     }
 
     @Disabled
@@ -108,7 +110,22 @@ class ConvertTest {
         assertTrue(file.exists());
 
     }
+    @Test
+    void testGetAdress(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Adress adress = new Adress("a", "a", "a", "a");
+        String test = convert.getAdress(stringBuilder,adress);
+        assertEquals("a                                                           a         a     a                   ", test);
 
+    }
+
+    @Test
+    void testGetBankInfo(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Bank bank = new Bank("a", "a");
+        String test = convert.getBankInfo(stringBuilder, "1234", bank);
+        assertEquals("1234a                                                               a         \n", test);
+    }
     @Test
     void doubleConverter() {
         String test = convert.doubleConverter(5,10.04);
