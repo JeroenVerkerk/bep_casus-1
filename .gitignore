@@ -2,3 +2,4 @@
 target/
 wercker.yml
 invoice*.txt
+test*.txt

@@ -29,7 +29,7 @@ class ReadCLITest {
 
     @Test
     void testSingleArgument() throws IOException {
-        String[] args = {"5"};
+        String[] args = {"5", ""};
         ReadCLI.main(args);
         assertEquals("Finding data for month 5" + System.getProperty("line.separator") +
                 "MAY" + System.getProperty("line.separator") +
