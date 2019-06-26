@@ -1,6 +1,5 @@
 package persistence.invoices.dao;
 
-import com.mongodb.MongoException;
 import com.mongodb.client.model.Filters;
 import logic.enums.Vat;
 import org.bson.Document;
@@ -53,10 +52,9 @@ public class InvoiceDAO {
         return invoices;
     }
 
-    private Invoice fillInvoice(Document document) throws MongoException {
+    private Invoice fillInvoice(Document document) throws RuntimeException {
         double id = document.getDouble("invoiceId");
         Date date = document.getDate("date");
-        String description = document.getString("note");
         double customerId = document.getDouble("customerId");
 
         ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
@@ -79,13 +77,13 @@ public class InvoiceDAO {
                 vat = Vat.NONE;
             }
             else {
-                throw new MongoException("Invalid VAT code");
+                throw new RuntimeException("Invalid VAT code");
             }
 
             InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, vat);
             invoiceLines.add(invoiceLine);
         }
 
-        return new Invoice(id, date, description, customerId, invoiceLines);
+        return new Invoice(id, date, customerId, invoiceLines);
     }
 }
