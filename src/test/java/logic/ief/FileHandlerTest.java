@@ -25,6 +25,13 @@ class FileHandlerTest {
     }
 
     @Test
+    void testFileAlreadyExists() throws IOException {
+        File file = handler.generateFile("./testFile.txt");
+
+        assertTrue(file == handler.generateFile("./testFile.txt"));
+    }
+
+    @Test
     void testIOerror() {
         assertThrows(IOException.class,
                 () -> handler.generateFile("fail/bla"));

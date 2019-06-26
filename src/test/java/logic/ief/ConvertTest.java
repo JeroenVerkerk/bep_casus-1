@@ -126,15 +126,6 @@ class ConvertTest {
         assertEquals('5', test);
     }
 
-    @Test
-    void testNegativeNumberConverter() {
-        int nine = 9;
-        int ten = 10;
-        assertTrue(convert.negativeNumberConverter(nine) == NegativeTokens.values()[nine].value);
-        assertTrue(convert.negativeNumberConverter(ten) == (char) ten);
-
-    }
-
     @AfterEach
     void tearDown() {
         convert = null;
