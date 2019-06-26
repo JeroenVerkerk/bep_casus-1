@@ -20,20 +20,24 @@ public class ReadCLI {
                 args = new String[]{month};
             }
 
-            try {
-                Convert convert = new Convert();
-                int monthNumber = Integer.parseInt(args[0]);
-                System.out.println("Finding data for month " + monthNumber);
-                if (!returnMonth(monthNumber).equals("error")) {
-                    convert.combineInfoToIEF(monthNumber);
-                    System.out.println("File created: invoice" + monthNumber + ".txt");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Argument " + args[0] + " is not an integer");
-
-            }
+            tryConvertAndPrint(args[0]);
         } catch (NullPointerException e) {
             System.out.println("Null is not a month");
+        }
+    }
+
+    private static void tryConvertAndPrint(String arg) throws IOException {
+        try {
+            Convert convert = new Convert();
+            int monthNumber = Integer.parseInt(arg);
+            System.out.println("Finding data for month " + monthNumber);
+            if (!returnMonth(monthNumber).equals("error")) {
+                convert.combineInfoToIEF(monthNumber);
+                System.out.println("File created: invoice" + monthNumber + ".txt");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Argument " + arg + " is not an integer");
+
         }
     }
 
