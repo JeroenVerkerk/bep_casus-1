@@ -53,7 +53,7 @@ public class InvoiceDAO {
         return invoices;
     }
 
-    private Invoice fillInvoice(Document document) throws MongoException {
+    private Invoice fillInvoice(Document document) throws RuntimeException {
         double id = document.getDouble("invoiceId");
         Date date = document.getDate("date");
         String description = document.getString("note");
@@ -79,7 +79,7 @@ public class InvoiceDAO {
                 vat = Vat.NONE;
             }
             else {
-                throw new MongoException("Invalid VAT code");
+                throw new RuntimeException("Invalid VAT code");
             }
 
             InvoiceLine invoiceLine = new InvoiceLine(productName, amount, totalPrice, unit, vat);
