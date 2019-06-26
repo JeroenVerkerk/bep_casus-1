@@ -9,14 +9,12 @@ import java.util.List;
 public class Invoice {
     private double invoiceId;
     private Date date;
-    private String description;
     private List<InvoiceLine> invoiceLines;
     private double customerId;
 
-    public Invoice(double id, Date date, String description, double customerId, List<InvoiceLine> invoiceLines) {
+    public Invoice(double id, Date date, double customerId, List<InvoiceLine> invoiceLines) {
         this.invoiceId = id;
         this.date = date;
-        this.description = description;
         this.customerId = customerId;
         this.invoiceLines = invoiceLines;
     }
