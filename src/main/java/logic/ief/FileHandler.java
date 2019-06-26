@@ -7,8 +7,10 @@ public class FileHandler {
 
     public File generateFile(String path) throws IOException {
         File file = new File(path);
-        if (!file.createNewFile()) {
-            throw new IOException("failed to create file");
+        if (!file.exists()) {
+            if (!file.createNewFile()) {
+                throw new IOException ("failed to create file");
+            }
         }
         return file;
     }
