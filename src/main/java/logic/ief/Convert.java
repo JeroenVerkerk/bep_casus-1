@@ -41,8 +41,7 @@ public class Convert {
         stringBuilder.append(adress);
         String companyVatNumber = paddOrSnip(13, company.getVatNumber());
         stringBuilder.append(getBankInfo(companyVatNumber, company.getBank()));
-        String companyInfo = stringBuilder.toString();
-        return companyInfo;
+        return stringBuilder.toString();
     }
 
     String getBankInfo(String vatNumber, Bank bank) {
