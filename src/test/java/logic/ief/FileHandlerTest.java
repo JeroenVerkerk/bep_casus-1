@@ -23,14 +23,7 @@ class FileHandlerTest {
 
         assertTrue(file.exists());
     }
-
-    @Test
-    void testFileAlreadyExists() throws IOException {
-        File file = handler.generateFile("./testFile.txt");
-
-        assertTrue(file == handler.generateFile("./testFile.txt"));
-    }
-
+    
     @Test
     void testIOerror() {
         assertThrows(IOException.class,
