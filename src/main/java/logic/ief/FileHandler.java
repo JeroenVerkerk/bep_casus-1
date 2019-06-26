@@ -8,9 +8,7 @@ public class FileHandler {
     public File generateFile(String path) throws IOException {
         File file = new File(path);
         if (!file.exists()) {
-            if (!file.createNewFile()) {
-                throw new IOException ("failed to create file");
-            }
+            file.createNewFile();
         }
         return file;
     }
