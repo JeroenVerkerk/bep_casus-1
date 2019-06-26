@@ -1,6 +1,5 @@
 package persistence.invoices.dao;
 
-import com.mongodb.MongoException;
 import com.mongodb.client.model.Filters;
 import logic.enums.Vat;
 import org.bson.Document;
@@ -56,7 +55,6 @@ public class InvoiceDAO {
     private Invoice fillInvoice(Document document) throws RuntimeException {
         double id = document.getDouble("invoiceId");
         Date date = document.getDate("date");
-        String description = document.getString("note");
         double customerId = document.getDouble("customerId");
 
         ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
@@ -86,6 +84,6 @@ public class InvoiceDAO {
             invoiceLines.add(invoiceLine);
         }
 
-        return new Invoice(id, date, description, customerId, invoiceLines);
+        return new Invoice(id, date, customerId, invoiceLines);
     }
 }
